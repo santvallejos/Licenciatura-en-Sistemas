@@ -16,7 +16,16 @@ public class Producto
     private Laboratorio laboratorio;
 
     /** 
+     * Constructor completo de la clase Producto.
+     * Inicializa un producto con todos sus atributos.
      * 
+     * @param p_codigo Código del producto
+     * @param p_rubro Rubro del producto
+     * @param p_desc Descripción del producto
+     * @param p_costo Costo del producto
+     * @param p_porcPtoRepo Porcentaje de punto de reposición del producto
+     * @param p_existMinima Existencia mínima del producto
+     * @param p_lab Laboratorio del producto
     */
     Producto(int p_codigo, String p_rubro, String p_desc, double p_costo, double p_porcPtoRepo, int p_existMinima, Laboratorio p_lab)
     {
@@ -30,6 +39,17 @@ public class Producto
         this.setLaboratorio(p_lab);
     }
 
+    /** 
+     * Constructor básico de la clase Producto.
+     * Inicializa un producto con los atributos esenciales.
+     * El porcentaje de punto de reposición y la existencia mínima quedan sin definir.
+     * 
+     * @param p_codigo Código del producto
+     * @param p_rubro Rubro del producto
+     * @param p_desc Descripción del producto
+     * @param p_costo Costo del producto
+     * @param p_lab Laboratorio del producto
+    */
     Producto(int p_codigo, String p_rubro, String p_desc, double p_costo, Laboratorio p_lab)
     {
         this.setCodigo(p_codigo);
@@ -120,40 +140,69 @@ public class Producto
         return this.laboratorio;
     }
 
-    // Como saber cuando se esta agregando o quitando dependiendo del parametro que se pasa.
+    /**
+     * Ajusta el stock del producto.
+     * 
+     * @param p_cantidad Cantidad a ajustar (puede ser positiva o negativa)
+     */
     public void ajuste(int p_cantidad)
     {
         this.setStock(this.getStock() + p_cantidad);
     }
 
+    /**
+     * Calcula el precio de lista del producto.
+     * 
+     * @return Precio de lista del producto
+     */
     public double precioLista()
     {
-        // El precio de lista es el costo mas un 12%
-        return getCosto() + (getCosto() * 0.12);
+        return getCosto() + (getCosto() * 0.12); // El precio de lista es el costo mas un 12%
     }
 
+    /**
+     * Calcula el precio de contado del producto.
+     * 
+     * @return Precio de contado del producto
+     */
     public double precioContado()
     {
-        //  El método  precioContado() devuelve el valor que representa el precio por pago al contado del producto, que se calcula restando un 5% al precio de lista.
-        return getCosto() - (getCosto() * 0.05);
+        return getCosto() - (getCosto() * 0.05); // El precio de contado es el costo menos un 5%
     }
 
+    /**
+     * Calcula el valor de stock valorizado del producto.
+     * 
+     * @return Valor de stock valorizado del producto
+     */
     public double stockValorizado()
     {
-        // Devuelve el valor de stock valorizado mas una rentabilidad del 12%
         return (this.getStock() * this.getCosto()) + (this.getCosto() * 0.12);
     }
 
+    /**
+     * Ajusta el porcentaje de punto de reposición del producto.
+     * 
+     * @param p_porce Porcentaje de punto de reposición a asignar
+     */
     public void ajustarPtoRepo(double p_porce)
     {
         this.setPorcPtoRepo(p_porce);
     }
 
+    /**
+     * Ajusta la existencia mínima del producto.
+     * 
+     * @param p_cantidad Cantidad de existencia mínima a asignar
+     */
     public void ajustarExistMinima(int p_cantidad)
     {
         this.setExistMinima(p_cantidad);
     }
 
+    /**
+     * Muestra la información del producto.
+     */
     public void mostrar()
     {
         System.out.println("Laboratorio: " + this.getLaboratorio().getNombre());
@@ -167,6 +216,11 @@ public class Producto
         System.out.println("Stock: " + this.getStock() + "  - " + "Stock Valorizado: $" + this.stockValorizado());
     }
 
+    /**
+     * Muestra una línea de información del producto.
+     * 
+     * @return Línea de información del producto
+     */
     public String mostrarLinea()
     {
         return this.getDescripcion() + "   " + this.precioLista() + "   " + this.getCosto(); 

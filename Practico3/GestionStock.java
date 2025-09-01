@@ -9,8 +9,12 @@ public class GestionStock
 {
     public static void main(String[] args)
     {
+        /* Instanciar un Laboratorio */
         Laboratorio laboratorio = new Laboratorio("Colgate S.A", "Scalabrini  Ortiz 552", "54-11 -4239-8447");
+        /* Instanciar un nuevo producto */
         Producto newProduct = new Producto(01, "Perfumería", "Jabón Deluxe", 5.25, 20, 5, laboratorio);
+
+        /* Prueba */
         System.out.println(newProduct);
         System.out.println("Se agregan 500 de stock");
         newProduct.ajuste(500);
@@ -18,6 +22,9 @@ public class GestionStock
         System.out.println("Se eliminan 200 de stock");
         newProduct.ajuste(-200);
         newProduct.mostrar();
+
+        /* Mostrar precios */
+        System.out.println("------------- Precios del producto -------------");
         System.out.println("Precio Lista");
         System.out.println(newProduct.precioLista());
         System.out.println("Precio contado");
