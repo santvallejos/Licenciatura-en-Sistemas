@@ -12,7 +12,7 @@ public class Persona
     private int nroDNI;            ///
     private String nombre;         ///
     private String apellido;       ///
-    private int anioNacimiento;    ///
+    private Calendar anioNacimiento;    ///
 
     /**
      * Constructor de la clase Persona.
@@ -68,7 +68,8 @@ public class Persona
      */
     private void setAnioNacimiento(int p_anio)
     {
-        this.anioNacimiento = p_anio;
+        this.anioNacimiento = new GregorianCalendar();
+        this.anioNacimiento.set(Calendar.YEAR, p_anio);
     }
 
     /**
@@ -106,7 +107,7 @@ public class Persona
      * 
      * @return Año de nacimiento de la persona
      */
-    public int getAnioNacimiento()
+    public Calendar getAnioNacimiento()
     {
         return this.anioNacimiento;
     }
@@ -122,7 +123,7 @@ public class Persona
         Calendar fechaHoy = new GregorianCalendar();
         int anioHoy = fechaHoy.get(Calendar.YEAR);      // Obtengo el año actual
 
-        int edad = anioHoy - getAnioNacimiento();       // resta los años para obtener la edad del usuario
+        int edad = anioHoy - this.anioNacimiento.get(Calendar.YEAR); // resta los años para obtener la edad del usuario
         return edad;
     }
 
@@ -157,5 +158,17 @@ public class Persona
     {
         System.out.println("Nombre y Apellido: " + nomYApe());
         System.out.println("DNI: " + getDNI() + "    " + "Edad: " + edad());
+    }
+
+    public boolean esCumpleaños()
+    {
+        Calendar fechaHoy = new GregorianCalendar();
+        int diaHoy = fechaHoy.get(Calendar.DAY_OF_MONTH);
+        int mesHoy = fechaHoy.get(Calendar.MONTH) + 1; // Los meses empiezan desde 0
+
+        int diaNacimiento = this.anioNacimiento.get(Calendar.DAY_OF_MONTH);
+        int mesNacimiento = this.anioNacimiento.get(Calendar.MONTH) + 1;
+
+        return (diaHoy == diaNacimiento && mesHoy == mesNacimiento);
     }
 }
