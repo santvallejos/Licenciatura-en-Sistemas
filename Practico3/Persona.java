@@ -9,10 +9,10 @@ import java.util.*;
  */
 public class Persona
 {
-    private int nroDNI;            ///
-    private String nombre;         ///
-    private String apellido;       ///
-    private Calendar anioNacimiento;    ///
+    private int nroDNI;
+    private String nombre;
+    private String apellido;
+    private Calendar anioNacimiento;
 
     /**
      * Constructor de la clase Persona.
