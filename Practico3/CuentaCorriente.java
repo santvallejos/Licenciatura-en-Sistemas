@@ -1,9 +1,11 @@
 
 /**
- * Write a description of class CuentaCorriente here.
+ * Clase que representa una cuenta corriente bancaria.
+ * Permite gestionar depósitos, extracciones con un límite de descubierto.
+ * A diferencia de la caja de ahorro, permite extraer más allá del saldo disponible
+ * hasta un límite establecido.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Sistema Bancario
  */
 public class CuentaCorriente
 {
@@ -12,6 +14,13 @@ public class CuentaCorriente
     private double limiteDescubierto;
     private Persona titular;
 
+    /**
+     * Constructor básico de la cuenta corriente.
+     * Inicializa la cuenta con saldo cero y límite de descubierto de 500.
+     * 
+     * @param p_nroCuenta Número de cuenta a asignar
+     * @param p_titular Persona titular de la cuenta
+     */
     CuentaCorriente(int p_nroCuenta, Persona p_titular)
     {
         this.setNroCuenta(p_nroCuenta);
@@ -20,6 +29,14 @@ public class CuentaCorriente
         this.setLimiteDescubierto(500);
     }
 
+    /**
+     * Constructor completo de la cuenta corriente.
+     * Inicializa la cuenta con un saldo específico y límite de descubierto de 500.
+     * 
+     * @param p_nroCuenta Número de cuenta a asignar
+     * @param p_titular Persona titular de la cuenta
+     * @param p_saldo Saldo inicial de la cuenta
+     */
     CuentaCorriente(int p_nroCuenta, Persona p_titular, double p_saldo)
     {
         this.setNroCuenta(p_nroCuenta);
@@ -68,16 +85,35 @@ public class CuentaCorriente
         return this.titular;
     }
 
+    /**
+     * Deposita un importe en la cuenta corriente.
+     * El importe se suma al saldo actual.
+     * 
+     * @param p_saldo Importe a depositar en la cuenta
+     */
     public void depositar(double p_saldo)
     {
         this.setSaldo(this.getSaldo() + p_saldo);
     }
 
+    /**
+     * Extrae un importe de la cuenta corriente.
+     * Permite extraer hasta el límite de descubierto establecido.
+     * 
+     * @param p_importe Importe a extraer de la cuenta
+     */
     public void extraer(double p_importe)
     {
         this.extraccion(p_importe);
     }
 
+    /**
+     * Verifica si es posible extraer un importe determinado.
+     * La extracción es posible si no supera el saldo más el límite de descubierto.
+     * 
+     * @param p_importe Importe que se desea extraer
+     * @return true si la extracción es posible, false en caso contrario
+     */
     private boolean puedeExtraer(double p_importe)
     {
         if(p_importe <= this.getSaldo() && p_importe <= this.getLimiteDescubierto())
@@ -90,6 +126,12 @@ public class CuentaCorriente
         }
     }
 
+    /**
+     * Realiza la extracción de un importe si es posible.
+     * Descuenta el importe del saldo actual.
+     * 
+     * @param p_importe Importe a extraer
+     */
     private void extraccion(double p_importe)
     {
         if(this.puedeExtraer(p_importe))
@@ -98,6 +140,10 @@ public class CuentaCorriente
         }
     }
 
+    /**
+     * Muestra en pantalla la información completa de la cuenta corriente.
+     * Incluye número de cuenta, saldo, titular y límite de descubierto.
+     */
     public void mostrar()
     {
         System.out.println("- Cuenta Corriente -- " + this.getNroCuenta());

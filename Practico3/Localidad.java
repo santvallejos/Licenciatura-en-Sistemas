@@ -1,15 +1,23 @@
 
 /**
- * Write a description of class Localidad here.
+ * Clase que representa una localidad con su nombre y provincia.
+ * Permite gestionar información geográfica básica para ubicación
+ * de personas, hospitales u otras entidades.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Sistema Geográfico
  */
 public class Localidad
 {
     private String nombre;
     private String provincia;
 
+    /**
+     * Constructor de la localidad.
+     * Inicializa una localidad con su nombre y provincia.
+     * 
+     * @param p_nombre Nombre de la localidad
+     * @param p_provincia Provincia a la que pertenece la localidad
+     */
     public Localidad(String p_nombre, String p_provincia)
     {
         this.setNombre(p_nombre);
@@ -36,6 +44,11 @@ public class Localidad
         return this.provincia;
     }
 
+    /**
+     * Genera una representación textual de la localidad.
+     * 
+     * @return Cadena con formato: "Localidad: [nombre]     Provincia: [provincia]"
+     */
     public String mostrar()
     {
         return "Localidad: " + this.getNombre() + "     Provincia: " + this.getProvincia();

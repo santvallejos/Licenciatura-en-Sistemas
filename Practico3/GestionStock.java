@@ -1,12 +1,20 @@
 
 /**
- * Write a description of class GestionStock here.
+ * Clase principal para probar la gestión de stock de productos farmacéuticos.
+ * Demuestra la funcionalidad de las clases Laboratorio y Producto
+ * mediante la creación de instancias y la realización de operaciones básicas.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Sistema de Gestión Farmacéutica
  */
 public class GestionStock
 {
+    /**
+     * Método principal que ejecuta ejemplos de gestión de stock.
+     * Crea un laboratorio y un producto, realiza ajustes de stock
+     * y muestra información sobre precios y disponibilidad.
+     * 
+     * @param args Argumentos de la línea de comandos (no utilizados)
+     */
     public static void main(String[] args)
     {
         /* Instanciar un Laboratorio */

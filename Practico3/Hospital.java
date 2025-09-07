@@ -1,9 +1,10 @@
 
 /**
- * Write a description of class Hospital here.
+ * Clase que representa un hospital con su información básica.
+ * Gestiona los datos de un hospital incluyendo nombre, director
+ * y la asociación con un paciente.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Sistema Hospitalario
  */
 public class Hospital
 {
@@ -11,6 +12,14 @@ public class Hospital
     private String nombreDirector;
     private Paciente paciente;
 
+    /**
+     * Constructor del hospital.
+     * Inicializa un hospital con su nombre, director y paciente asociado.
+     * 
+     * @param p_nombreHospital Nombre del hospital
+     * @param p_nombreDirector Nombre del director del hospital
+     * @param p_paciente Paciente asociado al hospital
+     */
     Hospital(String p_nombreHospital, String p_nombreDirector, Paciente p_paciente)
     {
         this.setNombreHospital(p_nombreHospital);
@@ -48,6 +57,12 @@ public class Hospital
         return this.paciente;
     }
 
+    /**
+     * Muestra la consulta de datos filiatorios del paciente.
+     * Presenta información del hospital, director y datos del paciente.
+     * 
+     * @param p_paciente Paciente del cual se mostrarán los datos
+     */
     public void consultaDatosFiliatorios(Paciente p_paciente)
     {
         System.out.println("Hospital: " + this.getNombreHospital() + "    Director: " + this.getNombreDirector());

@@ -1,9 +1,10 @@
 
 /**
- * Write a description of class Paciente here.
+ * Clase que representa un paciente con su información médica y personal.
+ * Gestiona los datos básicos del paciente incluyendo historia clínica,
+ * datos personales y localidades de nacimiento y residencia.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Sistema Hospitalario
  */
 public class Paciente
 {
@@ -13,6 +14,16 @@ public class Paciente
     private Localidad localidadNacido;
     private Localidad localidadVive;
 
+    /**
+     * Constructor del paciente.
+     * Inicializa un paciente con toda su información personal y médica.
+     * 
+     * @param p_historiaClinica Número de historia clínica del paciente
+     * @param p_nombre Nombre del paciente
+     * @param p_domicilio Domicilio actual del paciente
+     * @param p_localidadNacido Localidad donde nació el paciente
+     * @param p_localidadVive Localidad donde vive actualmente el paciente
+     */
     Paciente(int p_historiaClinica, String p_nombre, String p_domicilio, Localidad p_localidadNacido, Localidad p_localidadVive)
     {
         this.setHistoriaClinica(p_historiaClinica);
@@ -72,12 +83,22 @@ public class Paciente
         return this.localidadVive;
     }
 
+    /**
+     * Muestra en pantalla los datos del paciente de forma estructurada.
+     * Incluye nombre, historia clínica, domicilio y localidad de residencia.
+     */
     public void mostrarDatosPantalla()
     {
         System.out.println("Paciente: " + this.getNombre() + "        Historia Clinica:" + this.getHistoriaClinica() + "        Domicilio:" + this.getDomicilio());
         System.out.println("Localidad: " + this.localidadVive.mostrar());
     }
 
+    /**
+     * Genera una cadena con los datos del paciente en formato resumido.
+     * Útil para listados o reportes que requieren información compacta.
+     * 
+     * @return Cadena con formato: "Nombre ...... Historia Clínica ..... Domicilio - Localidad"
+     */
     public String cadenaDeDatos()
     {
         return this.getNombre() + " ...... " + this.getHistoriaClinica() + " ..... " + this.getDomicilio() + " - " + this.localidadVive.mostrar();

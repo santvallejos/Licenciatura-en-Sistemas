@@ -1,10 +1,11 @@
 import java.util.*;
 
 /**
- * Write a description of class EmpleadoConJefe here.
+ * Clase que representa un empleado que puede tener un jefe asignado.
+ * Extiende la funcionalidad básica de empleado añadiendo la relación jerárquica
+ * con otro empleado que actúa como jefe.
  * 
- * @author (your name)
- * @version (a version number or a date)
+ * @author Sistema de Recursos Humanos
  */
 public class EmpleadoConJefe {
     private long cuil;
@@ -14,8 +15,16 @@ public class EmpleadoConJefe {
     private Calendar fechaIngreso;
     private EmpleadoConJefe jefe;
 
-    /* 
+    /**
+     * Constructor completo del empleado con jefe.
+     * Crea un empleado con todos sus datos incluyendo la asignación de un jefe.
      * 
+     * @param p_cuil CUIL del empleado
+     * @param p_apellido Apellido del empleado
+     * @param p_nombre Nombre del empleado
+     * @param p_importe Sueldo básico del empleado
+     * @param p_fecha Fecha de ingreso del empleado
+     * @param p_jefe Empleado que actúa como jefe
      */
     EmpleadoConJefe(long p_cuil, String p_apellido, String p_nombre, double p_importe, Calendar p_fecha,
             EmpleadoConJefe p_jefe) {
@@ -27,8 +36,15 @@ public class EmpleadoConJefe {
         setJefe(p_jefe);
     }
 
-    /* 
+    /**
+     * Constructor del empleado sin jefe asignado.
+     * Crea un empleado con sus datos básicos pero sin jefe.
      * 
+     * @param p_cuil CUIL del empleado
+     * @param p_apellido Apellido del empleado
+     * @param p_nombre Nombre del empleado
+     * @param p_importe Sueldo básico del empleado
+     * @param p_fecha Fecha de ingreso del empleado
      */
     EmpleadoConJefe(long p_cuil, String p_apellido, String p_nombre, double p_importe, Calendar p_fecha) {
         setCuil(p_cuil);
@@ -39,6 +55,16 @@ public class EmpleadoConJefe {
         setJefe(null);
     }
 
+    /**
+     * Constructor básico del empleado con año de ingreso.
+     * Crea un empleado especificando solo el año de ingreso (se asume 1 de enero).
+     * 
+     * @param p_cuil CUIL del empleado
+     * @param p_apellido Apellido del empleado
+     * @param p_nombre Nombre del empleado
+     * @param p_importe Sueldo básico del empleado
+     * @param p_anio Año de ingreso del empleado
+     */
     EmpleadoConJefe(long p_cuil, String p_apellido, String p_nombre, double p_importe, int p_anio) {
         setCuil(p_cuil);
         setApellido(p_apellido);
@@ -102,11 +128,23 @@ public class EmpleadoConJefe {
         return this.jefe;
     }
 
+    /**
+     * Calcula la antigüedad del empleado en años.
+     * Se basa en la diferencia entre el año actual y el año de ingreso.
+     * 
+     * @return Cantidad de años de antigüedad del empleado
+     */
     public int antiguedad() {
         Calendar fechaActual = new GregorianCalendar();
         return fechaActual.get(Calendar.YEAR) - this.fechaIngreso.get(Calendar.YEAR);
     }
 
+    /**
+     * Calcula el descuento aplicado al sueldo básico.
+     * Aplica un descuento del 2% del sueldo básico más $1500 fijos.
+     * 
+     * @return Sueldo básico menos los descuentos aplicados
+     */
     private double descuento() {
         // Necesito hacer un descuento del 2% a getSueldoBasico y restar $1500 tambien
         double descuento = (getSueldoBasico() * 0.02) + 1500;
