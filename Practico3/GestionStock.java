@@ -13,7 +13,7 @@ public class GestionStock
      * Crea un laboratorio y un producto, realiza ajustes de stock
      * y muestra información sobre precios y disponibilidad.
      * 
-     * @param args Argumentos de la línea de comandos (no utilizados)
+     * @param args Argumentos de la línea de comandos
      */
     public static void main(String[] args)
     {
