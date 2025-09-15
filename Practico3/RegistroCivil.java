@@ -52,17 +52,8 @@ public class RegistroCivil {
         // Casamiento
         System.out.println("=== REGISTRANDO MATRIMONIO ===\n");
         hombre.casarseCon(mujer);
-        mujer.casarseCon(hombre);
 
         // Mostrar estados despues de casarse
-        hombre.casadoCon();
-
-        System.out.println("=== REGISTRANDO DIVORCIO ===\n");
-        hombre.divorcio();
-
-        // Mostrar estados despues de Divorciarse
-        hombre.mostrarEstadoCivil();
-        // Actualizar Estados
         hombre.casadoCon();
         mujer.casadaCon();
     }

@@ -113,7 +113,7 @@ public class Banco
 
     public boolean quitarEmpleado(Empleado p_empleado)
     {
-        if(p_empleado != null && this.empleados.contains(p_empleado))
+        if(p_empleado != null && this.getEmpleados().size() > 1)
         {
             this.empleados.remove(p_empleado);
             return true;
