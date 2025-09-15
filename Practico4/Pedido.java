@@ -72,12 +72,6 @@ public class Pedido
         return this.productos;
     }
 
-    /**
-     * Agregar productos al array de productos, se valida de si un producto es == null
-     * 
-     * @param productos
-     * @return Si se agregaron exitosamente o no
-     */
     public boolean agregarProductos(ArrayList p_productos)
     {
         for (int i = 0; i < p_productos.size(); i++) {
@@ -91,12 +85,6 @@ public class Pedido
         return true;
     }
 
-    /**
-     * Agregar un producto al array de productos
-     * 
-     * @param producto
-     * @return Si se agrego exitosamente o no
-     */
     public boolean agregarProducto(Producto p_producto)
     {
         if (p_producto != null) {
