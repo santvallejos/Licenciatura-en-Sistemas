@@ -21,8 +21,24 @@ public class AplicacionBanco {
         empleados.add(empleado2);
         empleados.add(empleado3);
 
-        Banco banco1 = new Banco("Banco de Corrientes", localidad1, 1, empleados); /* Instancia banco con un solo empleado */
+        /* Lista de titulares (Personas) */
+        Persona titular1 = new Persona(12345678, "Maria", "Lopez", 1985);
+        Persona titular2 = new Persona(87654321, "Carlos", "Rodriguez", 1990);
+        Persona titular3 = new Persona(11223344, "Laura", "Fernandez", 1975);
+
+        /* Lista de cuentas bancarias */
+        CuentaBancaria cuenta1 = new CuentaBancaria(1001, titular1, 5000.0);
+        CuentaBancaria cuenta2 = new CuentaBancaria(1002, titular2, 0.0);
+        CuentaBancaria cuenta3 = new CuentaBancaria(1003, titular3, 15000.0);
+        ArrayList<CuentaBancaria> cuentas = new ArrayList<CuentaBancaria>();
+        cuentas.add(cuenta1);
+        cuentas.add(cuenta2);
+        cuentas.add(cuenta3);
+
+        Banco banco1 = new Banco("Banco de Corrientes", localidad1, 1, empleados, cuentas); /* Instancia banco con empleados y cuentas */
 
         banco1.mostrar();
+        System.out.println();
+        banco1.mostrarResumen();
     }
 }
