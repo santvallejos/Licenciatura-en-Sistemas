@@ -30,8 +30,7 @@ public class Curso
     Curso(String p_nombre, HashMap<Integer, Alumno> p_alumnos)
     {
         setNombre(p_nombre);
-        //this.alumnos = p_alumnos;
-
+        setAlumnos(p_alumnos);
     }
 
     private void setNombre(String p_nombre)
