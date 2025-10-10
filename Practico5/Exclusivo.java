@@ -41,7 +41,7 @@ public class Exclusivo extends Cargo
     public void mostrarCargo()
     {
         super.mostrarCargo();
-        System.out.println("----Cargo de caracter SemiExclusivo----");
+        System.out.println("----Cargo de caracter Exclusivo----");
         System.out.println("Horas investigación: " + this.getHorasDeInvestigacion());
         System.out.println("Horas extensión: " + this.getHorasDeExtension());
     }

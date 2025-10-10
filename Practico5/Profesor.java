@@ -1,34 +1,44 @@
 import java.util.*;
-/**
- * Clase que representa un Profesor que hereda de Persona.
- * Un profesor tiene un título y puede tener entre 1 y 3 cargos.
- * Los cargos pueden ser: Simple (Cargo), SemiExclusivo o Exclusivo.
- * No se pueden duplicar los tipos de cargo.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
-public class Profesor extends Persona
-{
+
+public class Profesor extends Persona {
     private String titulo;
     private ArrayList<Cargo> cargos;
 
     /**
-     * Constructor de la clase Profesor.
+     * Constructor de la clase Profesor que se le pasa un cargo
      * 
-     * @param p_dni Número de DNI del profesor
-     * @param p_nombre Nombre del profesor
-     * @param p_apellido Apellido del profesor
-     * @param p_anio Año de nacimiento del profesor
-     * @param p_titulo Título académico del profesor
-     */
-    public Profesor(int p_dni, String p_nombre, String p_apellido, int p_anio, String p_titulo, ArrayList<Cargo> p_cargos)
-    {
-        super(p_dni, p_nombre, p_apellido, p_anio);
-        this.setTitulo(p_titulo);
-        this.setCargos(p_cargos);
+     * @param nroDNI;
+     * @param nombre;
+     * @param apellido;
+     * @param anioNacimiento;
+     * @param titulo;
+     * @param cargo;
+    */
+    public Profesor(int p_nroDNI, String p_nombre, String p_apellido, int p_anioNacimiento, String p_titulo, Cargo p_cargo) {
+        super(p_nroDNI, p_nombre, p_apellido, p_anioNacimiento);
+        setTitulo(p_titulo);
+        this.setCargo(new ArrayList<>());
+        this.setCargo(p_cargo);
     }
 
+    /**
+     * Constructor de la clase Profesor que se le pasa una lista de cargos
+     * 
+     * @param nroDNI;
+     * @param nombre;
+     * @param apellido;
+     * @param anioNacimiento;
+     * @param titulo;
+     * @param cargos;
+    */
+    public Profesor(int p_nroDNI, String p_nombre, String p_apellido, int p_anioNacimiento, String p_titulo, ArrayList<Cargo> p_cargos) {
+        super(p_nroDNI, p_nombre, p_apellido, p_anioNacimiento);
+        setTitulo(p_titulo);
+        this.setCargo(new ArrayList<>());
+        this.agregarCargos(p_cargos);
+    }
+
+    /* Getters y Setters */
     private void setTitulo(String p_titulo)
     {
         this.titulo = p_titulo;
@@ -39,9 +49,9 @@ public class Profesor extends Persona
         return this.titulo;
     }
 
-    public void setCargos(ArrayList<Cargo> p_cargos)
+    private void setCargo(Cargo p_cargo)
     {
-        this.cargos = p_cargos;
+        this.cargos.add(p_cargo);
     }
 
     public ArrayList<Cargo> getCargos()
@@ -50,114 +60,82 @@ public class Profesor extends Persona
     }
 
     /**
-     * Agrega un cargo al profesor.
-     * Valida que:
-     * - No se exceda el máximo de 3 cargos
-     * - No se dupliquen los tipos de cargo (Simple, SemiExclusivo, Exclusivo)
+     * Agregar una lista de cargos al profesor
      * 
-     * @param p_cargo El cargo a agregar
-     * @return boolean - true si se agregó correctamente, false en caso contrario
-     */
-    public boolean agregarCargo(Cargo p_cargo)
+     * @param p_cargos
+     * @return true si se agregaron todos los cargos, false si no se pudo agregar alguno
+    */
+    public boolean agregarCargos(ArrayList<Cargo> p_cargos)
     {
-        // Verificar que no tenga más de 3 cargos
-        if (this.cargos.size() >= 3) {
-            System.out.println("Error: No se puede tener más de 3 cargos.");
-            return false;
-        }
-
-        // Verificar que no se duplique el tipo de cargo
-        String tipoNuevoCargo = p_cargo.getClass().getSimpleName();
-        
-        for (Cargo cargo : this.cargos) {
-            String tipoCargoExistente = cargo.getClass().getSimpleName();
-            if (tipoCargoExistente.equals(tipoNuevoCargo)) {
-                System.out.println("Error: Ya existe un cargo de tipo " + tipoNuevoCargo);
-                return false;
+        // Verificar que la lista de cargos no sea mas de 3 cargos
+        if (p_cargos.size() <= 3)
+        {
+            // Verificar que no haya cargos repetidos
+            for (Cargo cargo : p_cargos)
+            {
+                if (!this.getCargos().contains(cargo))
+                {
+                    this.setCargo(cargo);
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
-
-        // Si pasa las validaciones, agregar el cargo
-        this.cargos.add(p_cargo);
-        return true;
-    }
-
-    /**
-     * Elimina un cargo del profesor.
-     * 
-     * @param p_cargo El cargo a eliminar
-     * @return boolean - true si se eliminó correctamente, false si no existía
-     */
-    public boolean quitarCargo(Cargo p_cargo)
-    {
-        if (this.getCargos().size() > 1)
+        else
         {
-            return this.cargos.remove(p_cargo);
+            return false;
         }
-        return false;
     }
 
     /**
-     * Listar los cargos del profesor.
-     * 
-     * @return String - Lista de cargos
-    */
+     * Listar los cargos del profesor
+     */
     public void listarCargos()
     {
-        System.out.println("Cargos del profesor " + this.nomYApe() + ":");
-        for (Cargo cargo : this.cargos) {
-            System.out.println(cargo.getNombreCargo());
+        System.out.println("-***** Cargos Asignados *****-");
+        System.out.println("---------------------------------------");
+        for (Cargo cargo : this.getCargos())
+        {
+            cargo.mostrarCargo();
+            System.out.println("");
         }
     }
 
     /**
-     * Calcula el sueldo total del profesor sumando todos sus cargos.
+     * Sueldo total del profesor
      * 
      * @return double - Sueldo total del profesor
-     */
+    */
     public double sueldoTotal()
     {
-        double total = 0.0;
-        for (Cargo cargo : this.cargos) {
-            total += cargo.sueldoDelCargo();
+        double sueldoTotal = 0;
+        for (Cargo cargo : this.getCargos())
+        {
+            sueldoTotal += cargo.sueldoDelCargo();
         }
-        return total;
+        return sueldoTotal;
     }
 
     /**
-     * Muestra la información completa del profesor y sus cargos.
-     */
-    public void mostrarCargos()
+     * Mostrar el profesor
+    */
+    @Override
+    public void mostrar()
     {
-        System.out.println("***** Profesor *****");
-        System.out.println(this.nomYApe());
-        System.out.println("Titulo: " + this.getTitulo());
-        System.out.println("Sueldo Total: $" + this.sueldoTotal());
-        System.out.println("\n----- Cargos (" + this.cargos.size() + ") -----");
-        
-        for (Cargo cargo : this.cargos) {
-            cargo.mostrarCargo();
-            System.out.println();
-        }
+        super.mostrar();
+        System.out.println("Titulo: " + getTitulo());
+        System.out.println("");
+        this.listarCargos();
+        this.sueldoTotal();
     }
 
     /**
-     * Devuelve el nombre y apellido concatenados.
-     * 
-     * @return String - Nombre completo
-     */
-    public String nomYApe()
+     * Mostrar Profesor en una sola linea
+    */
+    public void mostrarLinea()
     {
-        return this.getNombre() + " " + this.getApellido();
-    }
-
-    /**
-     * Devuelve el apellido y nombre concatenados.
-     * 
-     * @return String - Apellido y nombre
-     */
-    public String apeYNom()
-    {
-        return this.getApellido() + " " + this.getNombre();
+        System.out.println("DNI: " + super.getDNI() + " - Nombre: " + super.getNombre() + " - Sueldo Total: " + this.sueldoTotal());
     }
 }
