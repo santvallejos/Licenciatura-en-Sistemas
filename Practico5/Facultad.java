@@ -1,11 +1,13 @@
 
+import java.util.ArrayList;
+
 /**
  * Write a description of class Facultad here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Facultad extends Profesor
+public class Facultad
 {
     private String nombre;
     private ArrayList<Profesor> profesores;

@@ -17,8 +17,8 @@ public class Profesor extends Persona {
     public Profesor(int p_nroDNI, String p_nombre, String p_apellido, int p_anioNacimiento, String p_titulo, Cargo p_cargo) {
         super(p_nroDNI, p_nombre, p_apellido, p_anioNacimiento);
         setTitulo(p_titulo);
-        this.setCargo(new ArrayList<>());
-        this.setCargo(p_cargo);
+        this.setCargo(new ArrayList<Cargo>());
+        this.agregarCargo(p_cargo);
     }
 
     /**
@@ -34,7 +34,7 @@ public class Profesor extends Persona {
     public Profesor(int p_nroDNI, String p_nombre, String p_apellido, int p_anioNacimiento, String p_titulo, ArrayList<Cargo> p_cargos) {
         super(p_nroDNI, p_nombre, p_apellido, p_anioNacimiento);
         setTitulo(p_titulo);
-        this.setCargo(new ArrayList<>());
+        this.setCargo(new ArrayList<Cargo>());
         this.agregarCargos(p_cargos);
     }
 
@@ -49,14 +49,22 @@ public class Profesor extends Persona {
         return this.titulo;
     }
 
-    private void setCargo(Cargo p_cargo)
+    private void setCargo(ArrayList<Cargo> p_cargos)
     {
-        this.cargos.add(p_cargo);
+        this.cargos = p_cargos;
     }
 
     public ArrayList<Cargo> getCargos()
     {
         return this.cargos;
+    }
+
+    public void agregarCargo(Cargo p_cargo)
+    {
+        if (this.cargos.size() < 3 && !this.cargos.contains(p_cargo))
+        {
+            this.cargos.add(p_cargo);
+        }
     }
 
     /**
@@ -75,13 +83,14 @@ public class Profesor extends Persona {
             {
                 if (!this.getCargos().contains(cargo))
                 {
-                    this.setCargo(cargo);
+                    this.agregarCargo(cargo);
                 }
                 else
                 {
                     return false;
                 }
             }
+            return true;
         }
         else
         {
