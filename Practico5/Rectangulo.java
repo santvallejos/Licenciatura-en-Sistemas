@@ -6,7 +6,7 @@
  * 
  * @author Sistema de Geometría
  */
-public class Rectangulo
+public class Rectangulo extends FiguraGeometrica
 {
     private Punto origen;
     private double ancho;
