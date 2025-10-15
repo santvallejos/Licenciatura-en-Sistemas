@@ -8,7 +8,6 @@
  */
 public class Rectangulo extends FiguraGeometrica
 {
-    private Punto origen;
     private double ancho;
     private double alto;
 
@@ -16,12 +15,14 @@ public class Rectangulo extends FiguraGeometrica
      * Constructor completo del rectángulo.
      * Crea un rectángulo con origen, ancho y alto específicos.
      * 
-     * @param p_origen Punto de origen del rectángulo
      * @param p_ancho Ancho del rectángulo
      * @param p_alto Alto del rectángulo
+     * @param p_x Coordenada x del origen del rectángulo
+     * @param p_y Coordenada y del origen del rectángulo
      */
-    Rectangulo(Punto p_origen, double p_ancho, double p_alto) {
-        setOrigen(p_origen);
+    Rectangulo(double p_ancho, double p_alto, int p_x, int p_y) 
+    {
+        super(p_x, p_y);
         setAncho(p_ancho);
         setAlto(p_alto);
     }
@@ -33,42 +34,36 @@ public class Rectangulo extends FiguraGeometrica
      * @param p_ancho Ancho del rectángulo
      * @param p_alto Alto del rectángulo
      */
-    Rectangulo(double p_ancho, double p_alto) {
-        setOrigen(new Punto(0, 0));
+    Rectangulo(double p_ancho, double p_alto) 
+    {
+        super(0, 0);
         setAncho(p_ancho);
         setAlto(p_alto);
     }
 
-    private void setOrigen(Punto p_origen) {
-        this.origen = p_origen;
-    }
-
-    public Punto getOrigen() {
-        return this.origen;
-    }
-
-    private void setAncho(double p_ancho) {
+    private void setAncho(double p_ancho) 
+    {
         this.ancho = p_ancho;
     }
 
-    public double getAncho() {
+    public double getAncho() 
+    {
         return this.ancho;
     }
 
-    private void setAlto(double p_alto) {
+    private void setAlto(double p_alto) 
+    {
         this.alto = p_alto;
     }
 
-    public double getAlto() {
+    public double getAlto() 
+    {
         return this.alto;
     }
 
-    /**
-     * Devuelve el nombre de la figura geométrica.
-     * 
-     * @return Nombre de la figura, en este caso "Rectángulo"
-    */
-    public String nombreFigura(){
+    @Override
+    public String nombreFigura()
+    {
         return "******Rectángulo******";
     }
 
@@ -78,7 +73,8 @@ public class Rectangulo extends FiguraGeometrica
      * @param p_dx Incremento en la coordenada x
      * @param p_dy Incremento en la coordenada y
      */
-    public void desplazar(double p_dx, double p_dy){
+    public void desplazar(double p_dx, double p_dy)
+    {
         getOrigen().desplazar(p_dx, p_dy);
     }
 
@@ -87,17 +83,21 @@ public class Rectangulo extends FiguraGeometrica
      * 
      * @return Perímetro del rectángulo (2 * (ancho + alto))
      */
-    public double perimetro() {
+    public double perimetro() 
+    {
         return 2 * (getAncho() + getAlto());
     }
 
-    /**
-     * Calcula la superficie del rectángulo.
-     * 
-     * @return Superficie del rectángulo (ancho * alto)
-     */
-    public double superficie() {
+    @Override
+    public double superficie() 
+    {
         return getAncho() * getAlto();
+    }
+
+    @Override
+    public void mostrarSuperficie()
+    {
+        System.out.println("Superficie: " + this.superficie());
     }
 
     /**

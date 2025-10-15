@@ -40,45 +40,32 @@ public class Elipse extends FiguraGeometrica{
     public double getSEjeMenor(){
         return this.sEjeMenor;
     }
-    
-    /**
-     * Metodo nombreFigura.
-     * @return el nombre
-     */
-    
+
+    @Override
     public String nombreFigura (){
         return "******** Elipse ********";
     }
-    
-    /**
-     * Metodo superficie.
-     * @return el valor de la superficie
-     */
-    
+
+    @Override
     public double superficie(){
         return Math.PI * this.getSEjeMayor() * this.getSEjeMenor();
     }
-    
+
+    @Override
+    public void mostrarSuperficie()
+    {
+        System.out.println("Superficie: " + this.superficie());
+    }
+
     /**
      * Metodo caracteristicas
      */
-    
     public void caracteristicas (){
         System.out.println(nombreFigura());
         System.out.println("Centro: (" + this.getOrigen().getX() + ", " + this.getOrigen().getY() + ") - Semieje Mayor: " + this.getSEjeMayor() + " - Semieje Menor: " + this.getSEjeMenor());
         System.out.println("Superficie: " + this.superficie());
     }
-    
-    /**
-     * Metodo distanciaA
-     * @param otraElipse
-     * @return el valor de la distancia
-     */
-    
-    public double distanciaA (Elipse otraElipse){
-        return this.getOrigen().distanciaA(otraElipse.getOrigen());
-    }
-    
+
     /**
      * Metodo elMayor
      * @param otraElipse

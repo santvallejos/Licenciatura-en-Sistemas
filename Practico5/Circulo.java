@@ -76,14 +76,22 @@ public class Circulo extends Elipse
         return 2 * Math.PI * getRadio();
     }
 
-    /**
-     * Calcula la superficie del círculo.
-     * 
-     * @return Superficie del círculo (π * radio²)
-     */
+    @Override
+    public String nombreFigura()
+    {
+        return "******** Círculo ********";
+    }
+
+    @Override
     public double superficie()
     {
         return Math.PI * Math.pow(getRadio(), 2);
+    }
+
+    @Override
+    public void mostrarSuperficie()
+    {
+        System.out.println("Superficie: " + this.superficie());
     }
 
     /**

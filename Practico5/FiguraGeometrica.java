@@ -5,7 +5,7 @@
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class FiguraGeometrica
+public abstract class FiguraGeometrica
 {
     private Punto origen;
 
@@ -29,18 +29,22 @@ public class FiguraGeometrica
         return this.origen;
     }
 
-    public String nombreFigura()
-    {
-        return "Figura Geométrica";
-    }
+    /**
+     * Devolver el nombre de la figura
+     * 
+     * @return String - nombre de la figura
+    */
+    public abstract String nombreFigura();
 
-    public double superficie()
-    {
-        return 0;
-    }
+    /**
+     * Calcular la superficie de la figura
+     * 
+     * @return double - superficie de la figura
+    */
+    public abstract double superficie();
 
-    public void mostrarSuperficie()
-    {
-        System.out.println("Superficie: " + superficie());
-    }
+    /**
+     * Mostrar la superficie de la figura
+    */
+    public abstract void mostrarSuperficie();
 }
