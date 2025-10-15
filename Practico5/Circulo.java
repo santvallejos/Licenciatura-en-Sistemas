@@ -18,14 +18,11 @@ public class Circulo extends Elipse
      * @param p_radio Radio del círculo
      * @param p_centro Punto que representa el centro del círculo
      */
-    Circulo(double p_radio, Punto p_centro)
+    Circulo(double p_x, double p_y, double p_radio, Punto p_centro)
     {
-        
-        setRadio(p_radio);
+        super(p_x, p_y, p_radio, p_radio);
         setCentro(p_centro);
     }
-
-    Circulo()
 
     /**
      * Constructor por defecto del círculo.
@@ -33,6 +30,7 @@ public class Circulo extends Elipse
      */
     Circulo()
     {
+        super(0, 0);
         setRadio(0);
         setCentro(new Punto(0, 0));
     }
