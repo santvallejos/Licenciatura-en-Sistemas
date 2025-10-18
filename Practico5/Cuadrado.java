@@ -8,7 +8,7 @@
 public class Cuadrado extends Rectangulo
 {
     Cuadrado(int p_x, int p_y, double p_lado){
-        super(p_x, p_y, p_lado, p_lado);
+        super(p_lado, p_lado, p_x, p_y);
     }
 
     public String nombreFigura(){

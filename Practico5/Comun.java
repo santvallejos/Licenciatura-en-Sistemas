@@ -3,6 +3,11 @@ public class Comun extends Etiqueta
 {
     private double plus;
 
+    /**
+     * Constructor de una etiqueta de tipo Comun (ya tiene un precio fijo este tipo de etiqueta)
+     * 
+     * @param p_plus
+    */
     public Comun(double p_plus)
     {
         super(100);
@@ -25,6 +30,12 @@ public class Comun extends Etiqueta
         return (this.getCosto() * q) - (this.getCosto() * q * this.descuento(q)) + this.getPlus();
     }
 
+    /**
+     * Devuelve el descuento que se le tiene que aplicar segun la cantidad de etiquetas
+     * 
+     * @param q
+     * @return double - descuento a aplicar
+    */
     private double descuento(int q)
     {
         if(q > 1 && q <= 10)

@@ -4,6 +4,13 @@ public class Renglon
     private int cantidad;
     private double importe;
 
+    /**
+     * Constructor de la clase Renglon que representa un item de un pedido de etiquetas.
+     * 
+     * @param p_item
+     * @param p_cantidad
+     * @param p_importe
+    */
     Renglon(Etiqueta p_item, int p_cantidad, double p_importe)
     {
         this.setItem(p_item);
@@ -41,6 +48,9 @@ public class Renglon
         return this.importe;
     }
 
+    /**
+     * Muestra por pantalla en una linea la cantidad y el tipo de etiqueta
+    */
     public void mostrar()
     {
         System.out.println(this.getCantidad() + " Etiquetas de tipo " + this.getItem().toString());

@@ -3,6 +3,12 @@ public class Premiun extends Etiqueta
 {
     private int colores;
 
+    /**
+     * Constructor de una etiqueta de tipo Premiun
+     * 
+     * @param p_costo
+     * @param p_colores
+    */
     Premiun(double p_costo, int p_colores)
     {
         super(p_costo);
@@ -25,6 +31,11 @@ public class Premiun extends Etiqueta
         return (this.getCosto() * q) + (this.getCosto() * q * this.adicional());
     }
 
+    /**
+     * Devuelve el adicional que se le debe agregar al precio de la etiqueta segun la cantidad de colores
+     * 
+     * @return double - adicional
+    */
     private double adicional()
     {
         switch (this.getColores())

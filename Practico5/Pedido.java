@@ -4,6 +4,11 @@ public class Pedido
 {
     private ArrayList<Renglon> renglones;
 
+    /**
+     * Constructor de la clase Pedido.
+     * 
+     * @param p_renglones
+    */
     public Pedido(ArrayList<Renglon> p_renglones)
     {
         this.setRenglones(p_renglones);
@@ -19,6 +24,9 @@ public class Pedido
         return this.renglones;
     }
 
+    /**
+     * Muestra por pantalla el detalle del pedido, incluyendo la cantidad de items,
+    */
     public void mostrar()
     {
         double importeTotal = 0;

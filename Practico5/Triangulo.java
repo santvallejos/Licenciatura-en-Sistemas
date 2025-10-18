@@ -55,4 +55,10 @@ public class Triangulo extends FiguraGeometrica
     {
         return (this.base * this.altura) / 2;
     }
+
+    @Override
+    public void mostrarSuperficie()
+    {
+        System.out.println("La superficie del " + nombreFigura() + " es: " + superficie());
+    }
 }
