@@ -34,6 +34,16 @@ public class Jardin
         return this.figuras;
     }
 
+    public boolean agregarFigura(FiguraGeometrica p_figura)
+    {
+        return this.getFiguras().add(p_figura);
+    }
+
+    public boolean eliminarFigura(FiguraGeometrica p_figura)
+    {
+        return this.getFiguras().remove(p_figura);
+    }
+
     /**
      * Calcula cuántos litros de pintura se necesitan para cubrir la superficie total del jardín.
      * 

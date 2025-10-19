@@ -97,6 +97,15 @@ public class Facultad
         return true;
     }
 
+    public boolean eliminarProfesor(Profesor p_profesor)
+    {
+        if(this.getProfesores().size() > 1)
+        {
+            return this.profesores.remove(p_profesor);
+        }
+        return false;
+    }
+
     /**
      * Emitir nómina de profesores con el total a pagar
     */

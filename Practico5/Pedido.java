@@ -24,6 +24,25 @@ public class Pedido
         return this.renglones;
     }
 
+    public boolean agregarRenglon(Renglon p_renglon)
+    {
+        return this.getRenglones().add(p_renglon);
+    }
+
+    public boolean eliminarRenglon(int p_indice)
+    {
+        if(this.getRenglones().size() > 1)
+        {
+            this.getRenglones().remove(p_indice);
+            return true;
+        }
+        else
+        {
+            System.out.println("No se puede eliminar el último renglón del pedido.");
+        }
+        return false;
+    }
+
     /**
      * Muestra por pantalla el detalle del pedido, incluyendo la cantidad de items,
     */
