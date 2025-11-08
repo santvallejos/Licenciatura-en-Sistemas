@@ -30,6 +30,23 @@ public class Libro
         this.setPrestamos(p_prestamos);
     }
 
+    /**
+     * Constructor de la clase Libro sin lista de préstamos.
+     * 
+     * @param p_titulo
+     * @param p_edicion
+     * @param p_editorial
+     * @param p_anio
+    */
+    public Libro(String p_titulo, int p_edicion, String p_editorial, int p_anio)
+    {
+        this.setTitulo(p_titulo);
+        this.setEdicion(p_edicion);
+        this.setEditorial(p_editorial);
+        this.setAnio(p_anio);
+        this.setPrestamos(new ArrayList<Prestamo>());
+    }
+
     // Getters y Setters
     private void setTitulo(String p_titulo)
     {
@@ -89,6 +106,16 @@ public class Libro
     public boolean prestado()
     {
         return !this.prestamos.isEmpty();
+    }
+
+    /**
+     * Agrega un préstamo a la lista de préstamos del libro.
+     * 
+     * @param p_prestamo - Préstamo a agregar
+    */
+    public void agregarPrestamo(Prestamo p_prestamo)
+    {
+        this.prestamos.add(p_prestamo);
     }
 
     /**
