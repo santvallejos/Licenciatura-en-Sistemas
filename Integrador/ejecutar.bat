@@ -42,4 +42,3 @@ echo Compilacion exitosa!
 echo Iniciando aplicacion...
 echo.
 java -cp "%CLASSPATH%" BibliotecaGUI
-

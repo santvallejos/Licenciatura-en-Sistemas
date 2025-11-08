@@ -10,7 +10,6 @@ import java.sql.*;
  * @version 2.0 - PostgreSQL
  */
 public class DatabaseConfig {
-    
     // ============================================
     // CONFIGURACIÓN POSTGRESQL - RENDER.COM
     // ============================================
@@ -43,8 +42,10 @@ public class DatabaseConfig {
      * @return Connection - Conexión activa a la base de datos
      * @throws SQLException si hay error en la conexión
      */
-    public static Connection getConnection() throws SQLException {
-        if (connection == null || connection.isClosed()) {
+    public static Connection getConnection() throws SQLException
+    {
+        if (connection == null || connection.isClosed())
+        {
             try {
                 // Cargar el driver de PostgreSQL
                 Class.forName("org.postgresql.Driver");
@@ -60,12 +61,16 @@ public class DatabaseConfig {
                 // Crear las tablas si no existen
                 crearTablas();
                 
-            } catch (ClassNotFoundException e) {
+            } 
+            catch (ClassNotFoundException e) 
+            {
                 System.err.println("❌ ERROR: No se encontró el driver de PostgreSQL");
                 System.err.println("Descarga el conector desde: https://jdbc.postgresql.org/download/");
                 System.err.println("Necesitas: postgresql-42.7.1.jar (o versión superior)");
                 throw new SQLException("Driver de PostgreSQL no encontrado", e);
-            } catch (SQLException e) {
+            } 
+            catch (SQLException e) 
+            {
                 System.err.println("❌ ERROR: No se pudo conectar a PostgreSQL");
                 System.err.println("Verifica:");
                 System.err.println("  1. Que las credenciales sean correctas");
@@ -82,7 +87,8 @@ public class DatabaseConfig {
      * Crea las tablas necesarias en PostgreSQL si no existen.
      * PostgreSQL usa sintaxis ligeramente diferente a MySQL.
      */
-    private static void crearTablas() {
+    private static void crearTablas() 
+    {
         try {
             Statement stmt = connection.createStatement();
             
@@ -125,7 +131,9 @@ public class DatabaseConfig {
             
             stmt.close();
             
-        } catch (SQLException e) {
+        } 
+        catch (SQLException e) 
+        {
             System.err.println("❌ ERROR al crear las tablas: " + e.getMessage());
             e.printStackTrace();
         }
@@ -134,13 +142,18 @@ public class DatabaseConfig {
     /**
      * Cierra la conexión a la base de datos.
      */
-    public static void closeConnection() {
-        try {
-            if (connection != null && !connection.isClosed()) {
+    public static void closeConnection()
+    {
+        try
+        {
+            if (connection != null && !connection.isClosed())
+            {
                 connection.close();
                 System.out.println("✅ Conexión a la base de datos cerrada");
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             System.err.println("❌ ERROR al cerrar la conexión: " + e.getMessage());
         }
     }
@@ -150,10 +163,14 @@ public class DatabaseConfig {
      * 
      * @return true si hay conexión activa, false en caso contrario
      */
-    public static boolean isConnected() {
-        try {
+    public static boolean isConnected()
+    {
+        try
+        {
             return connection != null && !connection.isClosed();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             return false;
         }
     }
@@ -164,11 +181,15 @@ public class DatabaseConfig {
      * 
      * @return true si la conexión es exitosa, false en caso contrario
      */
-    public static boolean testConnection() {
-        try {
+    public static boolean testConnection()
+    {
+        try
+        {
             Connection conn = getConnection();
             return conn != null && !conn.isClosed();
-        } catch (SQLException e) {
+        }
+        catch (SQLException e)
+        {
             System.err.println("❌ Prueba de conexión fallida: " + e.getMessage());
             return false;
         }

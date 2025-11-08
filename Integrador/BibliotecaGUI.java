@@ -10,7 +10,8 @@ import java.util.Calendar;
  * @author Sistema de Biblioteca
  * @version 1.0
  */
-public class BibliotecaGUI extends JFrame {
+public class BibliotecaGUI extends JFrame
+{
     // Componentes principales
     private Biblioteca biblioteca;
     private BibliotecaDAO dao; // DAO para persistencia
@@ -27,14 +28,17 @@ public class BibliotecaGUI extends JFrame {
     /**
      * Constructor de la interfaz gráfica
      */
-    public BibliotecaGUI() {
+    public BibliotecaGUI()
+    {
         // Inicializar la biblioteca
         biblioteca = new Biblioteca("Biblioteca Central");
         dao = new BibliotecaDAO();
         
         // Intentar conectar a la base de datos
-        try {
-            if (DatabaseConfig.testConnection()) {
+        try
+        {
+            if (DatabaseConfig.testConnection())
+            {
                 usarBaseDatos = true;
                 System.out.println("✅ Modo con Base de Datos ACTIVADO");
                 
@@ -45,7 +49,9 @@ public class BibliotecaGUI extends JFrame {
                     "Conectado a la base de datos\nDatos cargados correctamente", 
                     JOptionPane.INFORMATION_MESSAGE);
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             usarBaseDatos = false;
             System.out.println("⚠️ Modo sin Base de Datos - Trabajando en memoria");
             mostrarMensaje("Advertencia", 
@@ -60,19 +66,25 @@ public class BibliotecaGUI extends JFrame {
         setLocationRelativeTo(null); // Centrar la ventana
         
         // Cerrar conexión al cerrar la ventana
-        addWindowListener(new java.awt.event.WindowAdapter() {
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
             @Override
-            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                if (usarBaseDatos) {
+            public void windowClosing(java.awt.event.WindowEvent windowEvent)
+            {
+                if (usarBaseDatos)
+                {
                     DatabaseConfig.closeConnection();
                 }
             }
         });
         
         // Establecer el Look and Feel del sistema
-        try {
+        try
+        {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
         
@@ -85,7 +97,8 @@ public class BibliotecaGUI extends JFrame {
     /**
      * Inicializa todos los componentes de la interfaz
      */
-    private void inicializarComponentes() {
+    private void inicializarComponentes()
+    {
         // Panel principal con BorderLayout
         JPanel panelPrincipal = new JPanel(new BorderLayout(10, 10));
         panelPrincipal.setBackground(COLOR_FONDO);
@@ -101,7 +114,8 @@ public class BibliotecaGUI extends JFrame {
     /**
      * Crea el panel superior con el título y información
      */
-    private JPanel crearPanelSuperior() {
+    private JPanel crearPanelSuperior()
+    {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(COLOR_PRIMARIO);
         panel.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
@@ -130,7 +144,8 @@ public class BibliotecaGUI extends JFrame {
     /**
      * Crea el panel central con los botones de acciones
      */
-    private JPanel crearPanelCentral() {
+    private JPanel crearPanelCentral()
+    {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(COLOR_FONDO);
         GridBagConstraints gbc = new GridBagConstraints();
@@ -182,7 +197,8 @@ public class BibliotecaGUI extends JFrame {
     /**
      * Crea un botón personalizado con estilo
      */
-    private JButton crearBoton(String texto, Color color) {
+    private JButton crearBoton(String texto, Color color)
+    {
         JButton boton = new JButton(texto);
         boton.setFont(new Font("Arial", Font.BOLD, 16));
         boton.setBackground(color);
@@ -193,7 +209,8 @@ public class BibliotecaGUI extends JFrame {
         boton.setPreferredSize(new Dimension(200, 80));
         
         // Efecto hover
-        boton.addMouseListener(new MouseAdapter() {
+        boton.addMouseListener(new MouseAdapter()
+        {
             public void mouseEntered(MouseEvent e) {
                 boton.setBackground(color.brighter());
             }
@@ -208,7 +225,8 @@ public class BibliotecaGUI extends JFrame {
     /**
      * Muestra el diálogo para agregar un nuevo socio
      */
-    private void mostrarDialogoAgregarSocio() {
+    private void mostrarDialogoAgregarSocio()
+    {
         JDialog dialogo = new JDialog(this, "Agregar Nuevo Socio", true);
         dialogo.setSize(450, 350);
         dialogo.setLocationRelativeTo(this);
@@ -270,32 +288,41 @@ public class BibliotecaGUI extends JFrame {
         JButton btnCancelar = crearBotonDialogo("Cancelar", COLOR_ADVERTENCIA);
         
         btnGuardar.addActionListener(e -> {
-            try {
+            try
+            {
                 int dni = Integer.parseInt(txtDni.getText().trim());
                 String nombre = txtNombre.getText().trim();
                 String adicional = txtAdicional.getText().trim();
                 
-                if (nombre.isEmpty() || adicional.isEmpty()) {
+                if (nombre.isEmpty() || adicional.isEmpty())
+                {
                     mostrarMensaje("Error", "Por favor complete todos los campos", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 
                 String tipo = (String) cmbTipo.getSelectedItem();
-                if (tipo.equals("Estudiante")) {
+                if (tipo.equals("Estudiante"))
+                {
                     biblioteca.nuevoSocioEstudiante(dni, nombre, adicional);
                     // Guardar en BD si está activa
-                    if (usarBaseDatos) {
+                    if (usarBaseDatos)
+                    {
                         Socio socio = biblioteca.buscarSocio(dni);
-                        if (socio != null && dao.guardarSocio(socio)) {
+                        if (socio != null && dao.guardarSocio(socio))
+                        {
                             System.out.println("✅ Socio guardado en la base de datos");
                         }
                     }
-                } else {
+                }
+                else
+                {
                     biblioteca.nuevoSocioDocente(dni, nombre, adicional);
                     // Guardar en BD si está activa
-                    if (usarBaseDatos) {
+                    if (usarBaseDatos)
+                    {
                         Socio socio = biblioteca.buscarSocio(dni);
-                        if (socio != null && dao.guardarSocio(socio)) {
+                        if (socio != null && dao.guardarSocio(socio))
+                        {
                             System.out.println("✅ Socio guardado en la base de datos");
                         }
                     }
@@ -303,7 +330,9 @@ public class BibliotecaGUI extends JFrame {
                 
                 mostrarMensaje("Éxito", "Socio agregado correctamente", JOptionPane.INFORMATION_MESSAGE);
                 dialogo.dispose();
-            } catch (NumberFormatException ex) {
+            }
+            catch (NumberFormatException ex)
+            {
                 mostrarMensaje("Error", "El DNI debe ser un número válido", JOptionPane.ERROR_MESSAGE);
             }
         });
@@ -321,7 +350,8 @@ public class BibliotecaGUI extends JFrame {
     /**
      * Muestra el diálogo para agregar un nuevo libro
      */
-    private void mostrarDialogoAgregarLibro() {
+    private void mostrarDialogoAgregarLibro()
+    {
         JDialog dialogo = new JDialog(this, "Agregar Nuevo Libro", true);
         dialogo.setSize(450, 350);
         dialogo.setLocationRelativeTo(this);
@@ -374,13 +404,15 @@ public class BibliotecaGUI extends JFrame {
         JButton btnCancelar = crearBotonDialogo("Cancelar", COLOR_ADVERTENCIA);
         
         btnGuardar.addActionListener(e -> {
-            try {
+            try
+            {
                 String titulo = txtTitulo.getText().trim();
                 int edicion = Integer.parseInt(txtEdicion.getText().trim());
                 String editorial = txtEditorial.getText().trim();
                 int anio = Integer.parseInt(txtAnio.getText().trim());
                 
-                if (titulo.isEmpty() || editorial.isEmpty()) {
+                if (titulo.isEmpty() || editorial.isEmpty())
+                {
                     mostrarMensaje("Error", "Por favor complete todos los campos", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
@@ -390,20 +422,25 @@ public class BibliotecaGUI extends JFrame {
                 // Guardar en BD si está activa
                 if (usarBaseDatos) {
                     Libro libro = null;
-                    for (Libro l : biblioteca.getLibros()) {
-                        if (l.getTitulo().equals(titulo)) {
+                    for (Libro l : biblioteca.getLibros())
+                    {
+                        if (l.getTitulo().equals(titulo))
+                        {
                             libro = l;
                             break;
                         }
                     }
-                    if (libro != null && dao.guardarLibro(libro) != -1) {
+                    if (libro != null && dao.guardarLibro(libro) != -1)
+                    {
                         System.out.println("✅ Libro guardado en la base de datos");
                     }
                 }
                 
                 mostrarMensaje("Éxito", "Libro agregado correctamente", JOptionPane.INFORMATION_MESSAGE);
                 dialogo.dispose();
-            } catch (NumberFormatException ex) {
+            }
+            catch (NumberFormatException ex)
+            {
                 mostrarMensaje("Error", "Edición y Año deben ser números válidos", JOptionPane.ERROR_MESSAGE);
             }
         });
@@ -421,8 +458,10 @@ public class BibliotecaGUI extends JFrame {
     /**
      * Muestra el diálogo para prestar un libro
      */
-    private void mostrarDialogoPrestarLibro() {
-        if (biblioteca.getSocios().isEmpty() || biblioteca.getLibros().isEmpty()) {
+    private void mostrarDialogoPrestarLibro()
+    {
+        if (biblioteca.getSocios().isEmpty() || biblioteca.getLibros().isEmpty())
+        {
             mostrarMensaje("Advertencia", "Debe agregar socios y libros primero", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -463,30 +502,36 @@ public class BibliotecaGUI extends JFrame {
         JButton btnCancelar = crearBotonDialogo("Cancelar", COLOR_ADVERTENCIA);
         
         btnPrestar.addActionListener(e -> {
-            try {
+            try
+            {
                 int dni = Integer.parseInt(txtDni.getText().trim());
                 String titulo = txtTitulo.getText().trim();
                 
                 Socio socio = biblioteca.buscarSocio(dni);
-                if (socio == null) {
+                if (socio == null)
+                {
                     mostrarMensaje("Error", "Socio no encontrado", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 
                 Libro libro = null;
-                for (Libro l : biblioteca.getLibros()) {
-                    if (l.getTitulo().equalsIgnoreCase(titulo)) {
+                for (Libro l : biblioteca.getLibros())
+                {
+                    if (l.getTitulo().equalsIgnoreCase(titulo))
+                    {
                         libro = l;
                         break;
                     }
                 }
                 
-                if (libro == null) {
+                if (libro == null)
+                {
                     mostrarMensaje("Error", "Libro no encontrado", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 
-                if (libro.prestado()) {
+                if (libro.prestado())
+                {
                     mostrarMensaje("Error", "El libro ya está prestado", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
@@ -494,7 +539,8 @@ public class BibliotecaGUI extends JFrame {
                 Calendar fechaActual = Calendar.getInstance();
                 boolean prestado = biblioteca.prestarLibro(fechaActual, socio, libro);
                 
-                if (prestado) {
+                if (prestado)
+                {
                     // Guardar en BD si está activa
                     if (usarBaseDatos) {
                         Prestamo ultimoPrestamo = libro.ultimoPrestamo();
@@ -505,10 +551,14 @@ public class BibliotecaGUI extends JFrame {
                     
                     mostrarMensaje("Éxito", "Libro prestado correctamente", JOptionPane.INFORMATION_MESSAGE);
                     dialogo.dispose();
-                } else {
+                }
+                else
+                {
                     mostrarMensaje("Error", "No se pudo prestar el libro. Verifique las condiciones del socio.", JOptionPane.ERROR_MESSAGE);
                 }
-            } catch (NumberFormatException ex) {
+            }
+            catch (NumberFormatException ex)
+            {
                 mostrarMensaje("Error", "El DNI debe ser un número válido", JOptionPane.ERROR_MESSAGE);
             }
         });
@@ -526,8 +576,10 @@ public class BibliotecaGUI extends JFrame {
     /**
      * Muestra el diálogo para devolver un libro
      */
-    private void mostrarDialogoDevolverLibro() {
-        if (biblioteca.getLibros().isEmpty()) {
+    private void mostrarDialogoDevolverLibro()
+    {
+        if (biblioteca.getLibros().isEmpty())
+        {
             mostrarMensaje("Advertencia", "No hay libros en la biblioteca", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -560,18 +612,22 @@ public class BibliotecaGUI extends JFrame {
         JButton btnCancelar = crearBotonDialogo("Cancelar", COLOR_ADVERTENCIA);
         
         btnDevolver.addActionListener(e -> {
-            try {
+            try
+            {
                 String titulo = txtTitulo.getText().trim();
                 
                 Libro libro = null;
-                for (Libro l : biblioteca.getLibros()) {
-                    if (l.getTitulo().equalsIgnoreCase(titulo)) {
+                for (Libro l : biblioteca.getLibros())
+                {
+                    if (l.getTitulo().equalsIgnoreCase(titulo))
+                    {
                         libro = l;
                         break;
                     }
                 }
                 
-                if (libro == null) {
+                if (libro == null)
+                {
                     mostrarMensaje("Error", "Libro no encontrado", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
@@ -581,14 +637,17 @@ public class BibliotecaGUI extends JFrame {
                 // Actualizar en BD si está activa
                 if (usarBaseDatos) {
                     Calendar fechaActual = Calendar.getInstance();
-                    if (dao.actualizarDevolucion(libro.getTitulo(), fechaActual)) {
+                    if (dao.actualizarDevolucion(libro.getTitulo(), fechaActual))
+                    {
                         System.out.println("✅ Devolución actualizada en la base de datos");
                     }
                 }
                 
                 mostrarMensaje("Éxito", "Libro devuelto correctamente", JOptionPane.INFORMATION_MESSAGE);
                 dialogo.dispose();
-            } catch (LibroNoPrestadoException ex) {
+            }
+            catch (LibroNoPrestadoException ex)
+            {
                 mostrarMensaje("Error", ex.getMessage(), JOptionPane.ERROR_MESSAGE);
             }
         });
@@ -606,8 +665,10 @@ public class BibliotecaGUI extends JFrame {
     /**
      * Muestra la lista de socios en una ventana
      */
-    private void mostrarListaSocios() {
-        if (biblioteca.getSocios().isEmpty()) {
+    private void mostrarListaSocios()
+    {
+        if (biblioteca.getSocios().isEmpty())
+        {
             mostrarMensaje("Información", "No hay socios registrados", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
@@ -619,8 +680,10 @@ public class BibliotecaGUI extends JFrame {
     /**
      * Muestra la lista de libros en una ventana
      */
-    private void mostrarListaLibros() {
-        if (biblioteca.getLibros().isEmpty()) {
+    private void mostrarListaLibros()
+    {
+        if (biblioteca.getLibros().isEmpty())
+        {
             mostrarMensaje("Información", "No hay libros registrados", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
@@ -632,7 +695,8 @@ public class BibliotecaGUI extends JFrame {
     /**
      * Muestra una ventana con texto en un área de texto desplazable
      */
-    private void mostrarVentanaTexto(String titulo, String contenido) {
+    private void mostrarVentanaTexto(String titulo, String contenido)
+    {
         JDialog dialogo = new JDialog(this, titulo, true);
         dialogo.setSize(600, 400);
         dialogo.setLocationRelativeTo(this);
@@ -661,7 +725,8 @@ public class BibliotecaGUI extends JFrame {
     /**
      * Crea una etiqueta con estilo personalizado
      */
-    private JLabel crearEtiqueta(String texto) {
+    private JLabel crearEtiqueta(String texto)
+    {
         JLabel etiqueta = new JLabel(texto);
         etiqueta.setFont(new Font("Arial", Font.BOLD, 14));
         etiqueta.setForeground(COLOR_TEXTO);
@@ -671,7 +736,8 @@ public class BibliotecaGUI extends JFrame {
     /**
      * Crea un campo de texto con estilo personalizado
      */
-    private JTextField crearCampoTexto() {
+    private JTextField crearCampoTexto()
+    {
         JTextField campo = new JTextField(20);
         campo.setFont(new Font("Arial", Font.PLAIN, 14));
         return campo;
@@ -680,7 +746,8 @@ public class BibliotecaGUI extends JFrame {
     /**
      * Crea un botón para diálogos con estilo personalizado
      */
-    private JButton crearBotonDialogo(String texto, Color color) {
+    private JButton crearBotonDialogo(String texto, Color color)
+    {
         JButton boton = new JButton(texto);
         boton.setFont(new Font("Arial", Font.BOLD, 13));
         boton.setBackground(color);
@@ -695,14 +762,16 @@ public class BibliotecaGUI extends JFrame {
     /**
      * Muestra un mensaje en un cuadro de diálogo
      */
-    private void mostrarMensaje(String titulo, String mensaje, int tipo) {
+    private void mostrarMensaje(String titulo, String mensaje, int tipo)
+    {
         JOptionPane.showMessageDialog(this, mensaje, titulo, tipo);
     }
     
     /**
      * Método main para ejecutar la aplicación
      */
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         SwingUtilities.invokeLater(() -> new BibliotecaGUI());
     }
 }
