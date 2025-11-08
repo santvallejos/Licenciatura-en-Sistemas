@@ -17,13 +17,26 @@ public class BibliotecaGUI extends JFrame
     private BibliotecaDAO dao; // DAO para persistencia
     private boolean usarBaseDatos = false; // Flag para activar/desactivar BD
     
-    // Colores personalizados para la interfaz
-    private final Color COLOR_PRIMARIO = new Color(41, 128, 185);      // Azul
-    private final Color COLOR_SECUNDARIO = new Color(52, 152, 219);    // Azul claro
-    private final Color COLOR_EXITO = new Color(46, 204, 113);         // Verde
-    private final Color COLOR_ADVERTENCIA = new Color(230, 126, 34);   // Naranja
-    private final Color COLOR_FONDO = new Color(236, 240, 241);        // Gris claro
-    private final Color COLOR_TEXTO = new Color(44, 62, 80);           // Gris oscuro
+    // Colores modernos - Paleta profesional
+    private final Color COLOR_PRIMARIO = new Color(37, 99, 235);       // Azul #2563EB
+    private final Color COLOR_PRIMARIO_HOVER = new Color(29, 78, 216); // Azul hover #1D4ED8
+    private final Color COLOR_SECUNDARIO = new Color(59, 130, 246);    // Azul claro #3B82F6
+    private final Color COLOR_SECUNDARIO_HOVER = new Color(37, 99, 235); // Azul hover
+    private final Color COLOR_EXITO = new Color(34, 197, 94);          // Verde #22C55E
+    private final Color COLOR_EXITO_HOVER = new Color(22, 163, 74);    // Verde hover
+    private final Color COLOR_ADVERTENCIA = new Color(251, 146, 60);   // Naranja #FB923C
+    private final Color COLOR_ADVERTENCIA_HOVER = new Color(249, 115, 22); // Naranja hover
+    private final Color COLOR_FONDO = new Color(249, 250, 251);        // Gris #F9FAFB
+    private final Color COLOR_TEXTO = new Color(30, 41, 59);           // Gris oscuro #1E293B
+    private final Color COLOR_TEXTO_LIGHT = new Color(100, 116, 139);  // Gris medio
+    private final Color COLOR_BORDER = new Color(226, 232, 240);       // Gris borde #E2E8F0
+    
+    // Fuentes modernas
+    private final Font FONT_TITULO = new Font("Segoe UI", Font.BOLD, 32);
+    private final Font FONT_SUBTITULO = new Font("Segoe UI", Font.PLAIN, 15);
+    private final Font FONT_BOTON = new Font("Segoe UI", Font.BOLD, 15);
+    private final Font FONT_LABEL = new Font("Segoe UI", Font.PLAIN, 14);
+    private final Font FONT_CAMPO = new Font("Segoe UI", Font.PLAIN, 14);
     
     /**
      * Constructor de la interfaz gráfica
@@ -61,7 +74,7 @@ public class BibliotecaGUI extends JFrame
         
         // Configuración de la ventana principal
         setTitle("Sistema de Gestión de Biblioteca" + (usarBaseDatos ? " [BD Activa]" : " [Sin BD]"));
-        setSize(900, 600);
+        setSize(1000, 700); // Ventana más grande para mejor visualización
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Centrar la ventana
         
@@ -100,13 +113,20 @@ public class BibliotecaGUI extends JFrame
     private void inicializarComponentes()
     {
         // Panel principal con BorderLayout
-        JPanel panelPrincipal = new JPanel(new BorderLayout(10, 10));
+        JPanel panelPrincipal = new JPanel(new BorderLayout(0, 0));
         panelPrincipal.setBackground(COLOR_FONDO);
-        panelPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        panelPrincipal.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         
         // Crear y agregar los componentes
         panelPrincipal.add(crearPanelSuperior(), BorderLayout.NORTH);
-        panelPrincipal.add(crearPanelCentral(), BorderLayout.CENTER);
+        
+        // Panel con padding para el contenido central
+        JPanel contenedorCentral = new JPanel(new BorderLayout());
+        contenedorCentral.setBackground(COLOR_FONDO);
+        contenedorCentral.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+        contenedorCentral.add(crearPanelCentral(), BorderLayout.CENTER);
+        
+        panelPrincipal.add(contenedorCentral, BorderLayout.CENTER);
         
         add(panelPrincipal);
     }
@@ -118,20 +138,20 @@ public class BibliotecaGUI extends JFrame
     {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(COLOR_PRIMARIO);
-        panel.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
+        panel.setBorder(BorderFactory.createEmptyBorder(25, 30, 25, 30));
         
-        // Título
+        // Título con icono más grande
         JLabel lblTitulo = new JLabel("📚 " + biblioteca.getNombre());
-        lblTitulo.setFont(new Font("Arial", Font.BOLD, 28));
+        lblTitulo.setFont(FONT_TITULO);
         lblTitulo.setForeground(Color.WHITE);
         
-        // Información
-        JLabel lblInfo = new JLabel("Sistema de Gestión Bibliotecaria");
-        lblInfo.setFont(new Font("Arial", Font.PLAIN, 14));
-        lblInfo.setForeground(new Color(236, 240, 241));
+        // Información con estilo mejorado
+        JLabel lblInfo = new JLabel("Sistema de Gestión Bibliotecaria • Administra socios, libros y préstamos");
+        lblInfo.setFont(FONT_SUBTITULO);
+        lblInfo.setForeground(new Color(219, 234, 254)); // Azul muy claro
         
         // Panel para el texto
-        JPanel panelTexto = new JPanel(new GridLayout(2, 1, 0, 5));
+        JPanel panelTexto = new JPanel(new GridLayout(2, 1, 0, 8));
         panelTexto.setOpaque(false);
         panelTexto.add(lblTitulo);
         panelTexto.add(lblInfo);
@@ -149,18 +169,18 @@ public class BibliotecaGUI extends JFrame
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(COLOR_FONDO);
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.insets = new Insets(15, 15, 15, 15); // Más espacio entre botones
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         
-        // Crear los botones con iconos
-        JButton btnAgregarSocio = crearBoton("👤 Agregar Socio", COLOR_PRIMARIO);
-        JButton btnAgregarLibro = crearBoton("📖 Agregar Libro", COLOR_SECUNDARIO);
-        JButton btnPrestarLibro = crearBoton("📤 Prestar Libro", COLOR_EXITO);
-        JButton btnDevolverLibro = crearBoton("📥 Devolver Libro", COLOR_ADVERTENCIA);
-        JButton btnListarSocios = crearBoton("👥 Listar Socios", COLOR_PRIMARIO);
-        JButton btnListarLibros = crearBoton("📚 Listar Libros", COLOR_SECUNDARIO);
+        // Crear los botones con iconos mejorados y colores hover
+        JButton btnAgregarSocio = crearBoton("👤 Agregar Socio", COLOR_PRIMARIO, COLOR_PRIMARIO_HOVER);
+        JButton btnAgregarLibro = crearBoton("📖 Agregar Libro", COLOR_SECUNDARIO, COLOR_SECUNDARIO_HOVER);
+        JButton btnPrestarLibro = crearBoton("📤 Prestar Libro", COLOR_EXITO, COLOR_EXITO_HOVER);
+        JButton btnDevolverLibro = crearBoton("📥 Devolver Libro", COLOR_ADVERTENCIA, COLOR_ADVERTENCIA_HOVER);
+        JButton btnListarSocios = crearBoton("👥 Listar Socios", COLOR_PRIMARIO, COLOR_PRIMARIO_HOVER);
+        JButton btnListarLibros = crearBoton("📚 Listar Libros", COLOR_SECUNDARIO, COLOR_SECUNDARIO_HOVER);
         
         // Agregar acciones a los botones
         btnAgregarSocio.addActionListener(e -> mostrarDialogoAgregarSocio());
@@ -195,24 +215,30 @@ public class BibliotecaGUI extends JFrame
     }
     
     /**
-     * Crea un botón personalizado con estilo
+     * Crea un botón personalizado con estilo moderno y efecto hover
      */
-    private JButton crearBoton(String texto, Color color)
+    private JButton crearBoton(String texto, Color color, Color colorHover)
     {
         JButton boton = new JButton(texto);
-        boton.setFont(new Font("Arial", Font.BOLD, 16));
+        boton.setFont(FONT_BOTON);
         boton.setBackground(color);
         boton.setForeground(Color.WHITE);
         boton.setFocusPainted(false);
         boton.setBorderPainted(false);
         boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        boton.setPreferredSize(new Dimension(200, 80));
+        boton.setPreferredSize(new Dimension(220, 90));
         
-        // Efecto hover
+        // Borde sutil redondeado
+        boton.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(COLOR_BORDER, 1),
+            BorderFactory.createEmptyBorder(15, 20, 15, 20)
+        ));
+        
+        // Efecto hover mejorado
         boton.addMouseListener(new MouseAdapter()
         {
             public void mouseEntered(MouseEvent e) {
-                boton.setBackground(color.brighter());
+                boton.setBackground(colorHover);
             }
             public void mouseExited(MouseEvent e) {
                 boton.setBackground(color);
@@ -228,14 +254,14 @@ public class BibliotecaGUI extends JFrame
     private void mostrarDialogoAgregarSocio()
     {
         JDialog dialogo = new JDialog(this, "Agregar Nuevo Socio", true);
-        dialogo.setSize(450, 350);
+        dialogo.setSize(500, 400);
         dialogo.setLocationRelativeTo(this);
         
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(Color.WHITE);
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panel.setBorder(BorderFactory.createEmptyBorder(25, 30, 25, 30));
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(8, 8, 8, 8);
+        gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         
         // Tipo de socio
@@ -245,7 +271,9 @@ public class BibliotecaGUI extends JFrame
         gbc.gridx = 1;
         String[] tipos = {"Estudiante", "Docente"};
         JComboBox<String> cmbTipo = new JComboBox<>(tipos);
-        cmbTipo.setFont(new Font("Arial", Font.PLAIN, 14));
+        cmbTipo.setFont(FONT_CAMPO);
+        cmbTipo.setBackground(Color.WHITE);
+        cmbTipo.setPreferredSize(new Dimension(250, 38));
         panel.add(cmbTipo, gbc);
         
         // DNI
@@ -353,14 +381,14 @@ public class BibliotecaGUI extends JFrame
     private void mostrarDialogoAgregarLibro()
     {
         JDialog dialogo = new JDialog(this, "Agregar Nuevo Libro", true);
-        dialogo.setSize(450, 350);
+        dialogo.setSize(500, 400);
         dialogo.setLocationRelativeTo(this);
         
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(Color.WHITE);
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panel.setBorder(BorderFactory.createEmptyBorder(25, 30, 25, 30));
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(8, 8, 8, 8);
+        gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         
         // Título
@@ -467,14 +495,14 @@ public class BibliotecaGUI extends JFrame
         }
         
         JDialog dialogo = new JDialog(this, "Prestar Libro", true);
-        dialogo.setSize(450, 280);
+        dialogo.setSize(500, 300);
         dialogo.setLocationRelativeTo(this);
         
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(Color.WHITE);
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panel.setBorder(BorderFactory.createEmptyBorder(25, 30, 25, 30));
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(8, 8, 8, 8);
+        gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         
         // DNI del socio
@@ -585,14 +613,14 @@ public class BibliotecaGUI extends JFrame
         }
         
         JDialog dialogo = new JDialog(this, "Devolver Libro", true);
-        dialogo.setSize(450, 220);
+        dialogo.setSize(500, 250);
         dialogo.setLocationRelativeTo(this);
         
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(Color.WHITE);
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panel.setBorder(BorderFactory.createEmptyBorder(25, 30, 25, 30));
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(8, 8, 8, 8);
+        gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         
         // Título del libro
@@ -728,18 +756,23 @@ public class BibliotecaGUI extends JFrame
     private JLabel crearEtiqueta(String texto)
     {
         JLabel etiqueta = new JLabel(texto);
-        etiqueta.setFont(new Font("Arial", Font.BOLD, 14));
+        etiqueta.setFont(FONT_LABEL);
         etiqueta.setForeground(COLOR_TEXTO);
         return etiqueta;
     }
     
     /**
-     * Crea un campo de texto con estilo personalizado
+     * Crea un campo de texto con estilo moderno
      */
     private JTextField crearCampoTexto()
     {
         JTextField campo = new JTextField(20);
-        campo.setFont(new Font("Arial", Font.PLAIN, 14));
+        campo.setFont(FONT_CAMPO);
+        campo.setPreferredSize(new Dimension(250, 38));
+        campo.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(COLOR_BORDER, 1),
+            BorderFactory.createEmptyBorder(8, 12, 8, 12)
+        ));
         return campo;
     }
     
@@ -749,12 +782,30 @@ public class BibliotecaGUI extends JFrame
     private JButton crearBotonDialogo(String texto, Color color)
     {
         JButton boton = new JButton(texto);
-        boton.setFont(new Font("Arial", Font.BOLD, 13));
+        boton.setFont(new Font("Segoe UI", Font.BOLD, 13));
         boton.setBackground(color);
         boton.setForeground(Color.WHITE);
         boton.setFocusPainted(false);
+        boton.setBorderPainted(false);
         boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        boton.setPreferredSize(new Dimension(120, 35));
+        boton.setPreferredSize(new Dimension(130, 40));
+        
+        // Efecto hover
+        boton.addMouseListener(new MouseAdapter()
+        {
+            public void mouseEntered(MouseEvent e) {
+                if (color.equals(COLOR_EXITO)) {
+                    boton.setBackground(COLOR_EXITO_HOVER);
+                } else if (color.equals(COLOR_ADVERTENCIA)) {
+                    boton.setBackground(COLOR_ADVERTENCIA_HOVER);
+                } else if (color.equals(COLOR_PRIMARIO)) {
+                    boton.setBackground(COLOR_PRIMARIO_HOVER);
+                }
+            }
+            public void mouseExited(MouseEvent e) {
+                boton.setBackground(color);
+            }
+        });
         
         return boton;
     }
