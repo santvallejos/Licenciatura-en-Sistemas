@@ -1,11 +1,12 @@
 import java.util.Calendar;
 
 /**
-
- */
+ * Clase representativa de un Préstamo realizado por un Socio sobre un Libro.
+ * 
+ * @version 1.0
+*/
 public class Prestamo
 {
-    // instance variables 
     private Calendar fechaRetiro;
     private Calendar fechaDevolucion;
     private Socio socio;

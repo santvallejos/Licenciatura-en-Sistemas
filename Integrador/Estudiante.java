@@ -6,7 +6,6 @@
  * @version (a version number or a date)
  */
 public class Estudiante extends Socio {
-    // instance variables - replace the example below with your own
     private String carrera;
 
     /**

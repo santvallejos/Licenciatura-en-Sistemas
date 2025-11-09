@@ -4,8 +4,7 @@ import java.sql.*;
  * Clase de configuración para la conexión a la base de datos PostgreSQL.
  * Maneja la conexión y creación de tablas necesarias.
  * 
- * IMPORTANTE: Esta configuración usa PostgreSQL (NO MySQL).
- * Compatible con servicios en la nube como Render, Railway, Supabase, etc.
+ * IMPORTANTE: Esta configuración usa PostgreSQL.
  * 
  * @version 2.0 - PostgreSQL
  */
@@ -15,7 +14,6 @@ public class DatabaseConfig {
     // ============================================
     
     // Datos de conexión de Render PostgreSQL
-    // IMPORTANTE: Reemplaza con TUS credenciales de Render
     private static final String HOST = "dpg-d47ogbripnbc73d1mcs0-a.oregon-postgres.render.com";
     private static final String PORT = "5432";
     private static final String DATABASE = "gestionbiblioteca_inwl";
@@ -27,7 +25,7 @@ public class DatabaseConfig {
     
     // ============================================
     // NOTAS IMPORTANTES:
-    // 1. Este código usa PostgreSQL (NO MySQL)
+    // 1. Este código usa PostgreSQL
     // 2. Necesitas el driver PostgreSQL JDBC
     // 3. Descarga desde: https://jdbc.postgresql.org/download/
     // 4. O usa: postgresql-42.7.1.jar (u otra versión)
@@ -50,7 +48,7 @@ public class DatabaseConfig {
                 // Cargar el driver de PostgreSQL
                 Class.forName("org.postgresql.Driver");
                 
-                // Establecer la conexión con SSL (requerido por Render)
+                // Establecer la conexión con SSL
                 String urlWithSSL = URL + "?sslmode=require";
                 connection = DriverManager.getConnection(urlWithSSL, USER, PASSWORD);
                 
@@ -60,16 +58,15 @@ public class DatabaseConfig {
                 
                 // Crear las tablas si no existen
                 crearTablas();
-                
             } 
-            catch (ClassNotFoundException e) 
+            catch (ClassNotFoundException e) // No se encontró el driver
             {
                 System.err.println("❌ ERROR: No se encontró el driver de PostgreSQL");
                 System.err.println("Descarga el conector desde: https://jdbc.postgresql.org/download/");
                 System.err.println("Necesitas: postgresql-42.7.1.jar (o versión superior)");
                 throw new SQLException("Driver de PostgreSQL no encontrado", e);
             } 
-            catch (SQLException e) 
+            catch (SQLException e) // No se pudo conectar a la DB
             {
                 System.err.println("❌ ERROR: No se pudo conectar a PostgreSQL");
                 System.err.println("Verifica:");
@@ -102,7 +99,7 @@ public class DatabaseConfig {
                 "dias_prestamo INTEGER NOT NULL" +
                 ")";
             stmt.executeUpdate(sqlSocios);
-            
+
             // Tabla de Libros
             String sqlLibros = 
                 "CREATE TABLE IF NOT EXISTS libros (" +
@@ -113,7 +110,7 @@ public class DatabaseConfig {
                 "anio INTEGER NOT NULL" +
                 ")";
             stmt.executeUpdate(sqlLibros);
-            
+
             // Tabla de Préstamos
             String sqlPrestamos = 
                 "CREATE TABLE IF NOT EXISTS prestamos (" +
@@ -126,11 +123,10 @@ public class DatabaseConfig {
                 "FOREIGN KEY (libro_id) REFERENCES libros(id) ON DELETE CASCADE" +
                 ")";
             stmt.executeUpdate(sqlPrestamos);
-            
+
             System.out.println("✅ Tablas de PostgreSQL verificadas/creadas");
-            
+
             stmt.close();
-            
         } 
         catch (SQLException e) 
         {

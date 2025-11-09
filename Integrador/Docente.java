@@ -7,7 +7,6 @@
  */
 public class Docente extends Socio
 {
-    // instance variables - replace the example below with your own
     private String area;
 
     /**
@@ -22,7 +21,6 @@ public class Docente extends Socio
     {
         super(p_dni, p_nombre, 5);
         this.setArea(p_area);// initialise instance variables
-        
     }
 
     /**

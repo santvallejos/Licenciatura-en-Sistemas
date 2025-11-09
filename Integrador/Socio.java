@@ -9,14 +9,13 @@ import java.util.Calendar;
  */
 public abstract class Socio
 {
-    // instance variables - replace the example below with your own
     private int dniSocio;
     private String nombre;
     private int diasPrestamo;
     private ArrayList<Prestamo> prestamos;
 
     /**
-     * Constructor for objects of class Socio
+     * Constructor de la clase Socio.
      * Añadir otro constructor donde se pasa un array ya creado, 
      * o donde hay un metodo agregarPrestamo??
      * 
@@ -30,7 +29,6 @@ public abstract class Socio
         this.setNombre(p_nombre);
         this.setDiasPrestamo(p_dias);
         this.setPrestamos(new ArrayList<>());
-        // initialise instance variables
     }
 
     // getter y setters
