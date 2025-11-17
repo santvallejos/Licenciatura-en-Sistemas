@@ -23,30 +23,30 @@ public class BibliotecaDAO {
     public boolean guardarSocio(Socio socio)
     {
         String sql = "INSERT INTO socios (dni, nombre, tipo, carrera_o_area, dias_prestamo) " +
-                     "VALUES (?, ?, ?, ?, ?)";
+                     "VALUES (?, ?, ?, ?, ?)"; // Consulta para insertar un socio
         
         try (Connection conn = DatabaseConfig.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql)) 
+                PreparedStatement consulta = conn.prepareStatement(sql)) 
             {
-            
-            pstmt.setInt(1, socio.getDni());
-            pstmt.setString(2, socio.getNombre());
-            pstmt.setString(3, socio.soyDeLaClase());
-            
-            // Determinar carrera o área según el tipo
-            if (socio instanceof Estudiante)
+
+            // Configurar parámetros de la consulta
+            consulta.setInt(1, socio.getDni());
+            consulta.setString(2, socio.getNombre());
+            consulta.setString(3, socio.soyDeLaClase());
+
+            if (socio instanceof Estudiante) // Si es estudiante
             {
-                pstmt.setString(4, ((Estudiante) socio).getCarrera());
+                consulta.setString(4, ((Estudiante) socio).getCarrera()); // Castear a Estudiante y obtener carrera
             }
             else if (socio instanceof Docente)
             {
-                pstmt.setString(4, ((Docente) socio).getArea());
+                consulta.setString(4, ((Docente) socio).getArea()); // Castear a Docente y obtener área
             }
-            
-            pstmt.setInt(5, socio.getDiasPrestamo());
-            
-            int filasAfectadas = pstmt.executeUpdate();
-            return filasAfectadas > 0;
+
+            consulta.setInt(5, socio.getDiasPrestamo());
+
+            int filasAfectadas = consulta.executeUpdate();// Ejecutar la consulta
+            return filasAfectadas > 0; // Retornar true si se insertó al menos una fila
             
         }
         catch (SQLException e)
@@ -62,21 +62,21 @@ public class BibliotecaDAO {
      * @return HashMap con DNI como clave y Socio como valor
      */
     public HashMap<Integer, Socio> obtenerTodosSocios() {
-        HashMap<Integer, Socio> socios = new HashMap<>();
-        String sql = "SELECT * FROM socios";
-        
+        HashMap<Integer, Socio> socios = new HashMap<>(); // Mapa para almacenar socios con DNI como clave
+        String sql = "SELECT * FROM socios"; // Consulta para obtener todos los socios de la tabla "socios"
+
         try (Connection conn = DatabaseConfig.getConnection();
                 Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(sql))
+                ResultSet consulta = stmt.executeQuery(sql))
             {
-            
-            while (rs.next())
+
+            while (consulta.next())
             {
-                int dni = rs.getInt("dni");
-                String nombre = rs.getString("nombre");
-                String tipo = rs.getString("tipo");
-                String carreraOArea = rs.getString("carrera_o_area");
-                int diasPrestamo = rs.getInt("dias_prestamo");
+                // Obtener datos del socio desde el ResultSet
+                int dni = consulta.getInt("dni");
+                String nombre = consulta.getString("nombre");
+                String tipo = consulta.getString("tipo");
+                String carreraOArea = consulta.getString("carrera_o_area");
 
                 Socio socio;
                 if (tipo.equals("Estudiante"))
@@ -88,7 +88,7 @@ public class BibliotecaDAO {
                     socio = new Docente(dni, nombre, carreraOArea);
                 }
 
-                socios.put(dni, socio);
+                socios.put(dni, socio); // Agregar socio al diccionario
             }
 
             System.out.println("✅ Cargados " + socios.size() + " socios desde la base de datos");
@@ -109,20 +109,20 @@ public class BibliotecaDAO {
      */
     public Socio buscarSocio(int dni)
     {
-        String sql = "SELECT * FROM socios WHERE dni = ?";
-        
+        String sql = "SELECT * FROM socios WHERE dni = ?"; // Consulta para buscar un socio por DNI
+
         try (Connection conn = DatabaseConfig.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql))
+                PreparedStatement consulta = conn.prepareStatement(sql))
             {
-            
-            pstmt.setInt(1, dni);
-            ResultSet rs = pstmt.executeQuery();
-            
-            if (rs.next())
+
+            consulta.setInt(1, dni);
+            ResultSet resultado = consulta.executeQuery();
+
+            if (resultado.next())
             {
-                String nombre = rs.getString("nombre");
-                String tipo = rs.getString("tipo");
-                String carreraOArea = rs.getString("carrera_o_area");
+                String nombre = resultado.getString("nombre");
+                String tipo = resultado.getString("tipo");
+                String carreraOArea = resultado.getString("carrera_o_area");
 
                 if (tipo.equals("Estudiante"))
                 {
@@ -149,14 +149,14 @@ public class BibliotecaDAO {
      */
     public boolean eliminarSocio(int dni)
     {
-        String sql = "DELETE FROM socios WHERE dni = ?";
+        String sql = "DELETE FROM socios WHERE dni = ?"; // Consulta para eliminar un socio por su DNI
         
         try (Connection conn = DatabaseConfig.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql))
+                PreparedStatement consulta = conn.prepareStatement(sql))
             {
 
-            pstmt.setInt(1, dni);
-            int filasAfectadas = pstmt.executeUpdate();
+            consulta.setInt(1, dni);
+            int filasAfectadas = consulta.executeUpdate();
             return filasAfectadas > 0;
 
         }
@@ -179,26 +179,27 @@ public class BibliotecaDAO {
      */
     public int guardarLibro(Libro libro)
     {
-        String sql = "INSERT INTO libros (titulo, edicion, editorial, anio) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO libros (titulo, edicion, editorial, anio) VALUES (?, ?, ?, ?)"; // Consulta para insertar un libro
         
         try (Connection conn = DatabaseConfig.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS))
+                PreparedStatement consulta = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS))
             {
-            
-            pstmt.setString(1, libro.getTitulo());
-            pstmt.setInt(2, libro.getEdicion());
-            pstmt.setString(3, libro.getEditorial());
-            pstmt.setInt(4, libro.getAnio());
 
-            int filasAfectadas = pstmt.executeUpdate();
+            // Configurar parámetros de la consulta
+            consulta.setString(1, libro.getTitulo());
+            consulta.setInt(2, libro.getEdicion());
+            consulta.setString(3, libro.getEditorial());
+            consulta.setInt(4, libro.getAnio());
+
+            int filasAfectadas = consulta.executeUpdate(); // Ejecutar la consulta
 
             if (filasAfectadas > 0)
             {
                 // Obtener el ID generado
-                ResultSet rs = pstmt.getGeneratedKeys();
-                if (rs.next())
+                ResultSet respuesta = consulta.getGeneratedKeys();
+                if (respuesta.next())
                 {
-                    return rs.getInt(1);
+                    return respuesta.getInt(1);
                 }
             }
         }
@@ -216,23 +217,23 @@ public class BibliotecaDAO {
      */
     public Set<Libro> obtenerTodosLibros()
     {
-        Set<Libro> libros = new HashSet<>();
-        String sql = "SELECT * FROM libros";
+        Set<Libro> libros = new HashSet<>(); // Set para almacenar los libros
+        String sql = "SELECT * FROM libros"; // Consulta para obtener todos los libros de la tabla "libros"
         
         try (Connection conn = DatabaseConfig.getConnection();
                 Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(sql))
+                ResultSet respuesta = stmt.executeQuery(sql))
             {
-            
-            while (rs.next())
+
+            while (respuesta.next())
             {
-                String titulo = rs.getString("titulo");
-                int edicion = rs.getInt("edicion");
-                String editorial = rs.getString("editorial");
-                int anio = rs.getInt("anio");
+                String titulo = respuesta.getString("titulo");
+                int edicion = respuesta.getInt("edicion");
+                String editorial = respuesta.getString("editorial");
+                int anio = respuesta.getInt("anio");
                 
                 Libro libro = new Libro(titulo, edicion, editorial, anio);
-                libros.add(libro);
+                libros.add(libro);// Agregar cada libro a la colección
             }
 
             System.out.println("✅ Cargados " + libros.size() + " libros desde la base de datos");
@@ -241,7 +242,7 @@ public class BibliotecaDAO {
         {
             System.err.println("❌ Error al obtener libros: " + e.getMessage());
         }
-        
+
         return libros;
     }
 
@@ -253,21 +254,21 @@ public class BibliotecaDAO {
      */
     public Libro buscarLibroPorTitulo(String titulo)
     {
-        String sql = "SELECT * FROM libros WHERE titulo = ?";
+        String sql = "SELECT * FROM libros WHERE titulo = ?"; // Consulta para buscar un libro por título
 
         try (Connection conn = DatabaseConfig.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql))
+                PreparedStatement consulta = conn.prepareStatement(sql))
             {
-            
-            pstmt.setString(1, titulo);
-            ResultSet rs = pstmt.executeQuery();
-            
-            if (rs.next())
+
+            consulta.setString(1, titulo);
+            ResultSet respuesta = consulta.executeQuery(); // Ejecutar la consulta
+
+            if (respuesta.next())
             {
-                int edicion = rs.getInt("edicion");
-                String editorial = rs.getString("editorial");
-                int anio = rs.getInt("anio");
-                
+                int edicion = respuesta.getInt("edicion");
+                String editorial = respuesta.getString("editorial");
+                int anio = respuesta.getInt("anio");
+
                 return new Libro(titulo, edicion, editorial, anio);
             }
         }
@@ -287,20 +288,19 @@ public class BibliotecaDAO {
      */
     public int obtenerIdLibro(String titulo)
     {
-        String sql = "SELECT id FROM libros WHERE titulo = ?";
+        String sql = "SELECT id FROM libros WHERE titulo = ?"; // Obtener ID del libro por título
 
         try (Connection conn = DatabaseConfig.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql))
+                PreparedStatement consulta = conn.prepareStatement(sql))
             {
 
-            pstmt.setString(1, titulo);
-            ResultSet rs = pstmt.executeQuery();
+            consulta.setString(1, titulo);
+            ResultSet respuesta = consulta.executeQuery();
 
-            if (rs.next())
+            if (respuesta.next())
             {
-                return rs.getInt("id");
+                return respuesta.getInt("id");
             }
-
         }
         catch (SQLException e)
         {
@@ -318,16 +318,15 @@ public class BibliotecaDAO {
      */
     public boolean eliminarLibro(String titulo)
     {
-        String sql = "DELETE FROM libros WHERE titulo = ?";
+        String sql = "DELETE FROM libros WHERE titulo = ?"; // Consulta para eliminar un libro por su título
         
         try (Connection conn = DatabaseConfig.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql))
+                PreparedStatement consulta = conn.prepareStatement(sql))
             {
 
-            pstmt.setString(1, titulo);
-            int filasAfectadas = pstmt.executeUpdate();
+            consulta.setString(1, titulo);
+            int filasAfectadas = consulta.executeUpdate();
             return filasAfectadas > 0;
-
         }
         catch (SQLException e)
         {
@@ -349,44 +348,59 @@ public class BibliotecaDAO {
      */
     public boolean guardarPrestamo(Prestamo prestamo, String libroTitulo)
     {
-        String sql = "INSERT INTO prestamos (fecha_retiro, fecha_devolucion, socio_dni, libro_id) " +
-                     "VALUES (?, ?, ?, ?)";
+        String sqlGetLibroId = "SELECT id FROM libros WHERE titulo = ?"; // Obtener ID del libro por título
+        String sqlInsertPrestamo = "INSERT INTO prestamos (fecha_retiro, fecha_devolucion, socio_dni, libro_id) " + "VALUES (?, ?, ?, ?)"; // Consulta para insertar un préstamo
         
-        try (Connection conn = DatabaseConfig.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql))
+        try (Connection conn = DatabaseConfig.getConnection())
             {
-            
-            // Convertir Calendar a Date de SQL
-            Calendar fechaRetiro = prestamo.getFechaRetiro();
-            java.sql.Date sqlFechaRetiro = new java.sql.Date(fechaRetiro.getTimeInMillis());
-            pstmt.setDate(1, sqlFechaRetiro);
-            
-            // Fecha de devolución puede ser null
-            if (prestamo.getFechaDevolucion() != null)
+
+            // Primero, obtener el ID del libro
+            int libroId = -1;
+            try (PreparedStatement consultaLibro = conn.prepareStatement(sqlGetLibroId))
             {
-                Calendar fechaDevolucion = prestamo.getFechaDevolucion();
-                java.sql.Date sqlFechaDevolucion = new java.sql.Date(fechaDevolucion.getTimeInMillis());
-                pstmt.setDate(2, sqlFechaDevolucion);
-            }
-            else
-            {
-                pstmt.setNull(2, Types.DATE);
+                consultaLibro.setString(1, libroTitulo);
+                ResultSet respuesta = consultaLibro.executeQuery();
+
+                if (respuesta.next())
+                {
+                    libroId = respuesta.getInt("id");
+                }
             }
 
-            pstmt.setInt(3, prestamo.getSocio().getDni());
-
-            // Obtener el ID del libro
-            int libroId = obtenerIdLibro(libroTitulo);
             if (libroId == -1)
             {
                 System.err.println("❌ No se encontró el libro para guardar el préstamo");
                 return false;
             }
-            pstmt.setInt(4, libroId);
 
-            int filasAfectadas = pstmt.executeUpdate();
-            return filasAfectadas > 0;
+            // Ahora insertar el préstamo
+            try (PreparedStatement consultaPrestamo = conn.prepareStatement(sqlInsertPrestamo))
+            {
+                // Convertir Calendar a Date de SQL
+                Calendar fechaRetiro = prestamo.getFechaRetiro();
+                java.sql.Date sqlFechaRetiro = new java.sql.Date(fechaRetiro.getTimeInMillis());
 
+                // Configurar parámetros de la consulta
+                consultaPrestamo.setDate(1, sqlFechaRetiro);
+
+                // Fecha de devolución puede ser null
+                if (prestamo.getFechaDevolucion() != null)
+                {
+                    Calendar fechaDevolucion = prestamo.getFechaDevolucion();
+                    java.sql.Date sqlFechaDevolucion = new java.sql.Date(fechaDevolucion.getTimeInMillis());
+                    consultaPrestamo.setDate(2, sqlFechaDevolucion);
+                }
+                else
+                {
+                    consultaPrestamo.setNull(2, Types.DATE);
+                }
+
+                consultaPrestamo.setInt(3, prestamo.getSocio().getDni());
+                consultaPrestamo.setInt(4, libroId);
+
+                int filasAfectadas = consultaPrestamo.executeUpdate(); // Ejecutar la consulta
+                return filasAfectadas > 0;
+            }
         }
         catch (SQLException e)
         {
@@ -404,27 +418,27 @@ public class BibliotecaDAO {
      */
     public ArrayList<Prestamo> obtenerPrestamosPorLibro(Libro libro, Biblioteca biblioteca)
     {
-        ArrayList<Prestamo> prestamos = new ArrayList<>();
+        ArrayList<Prestamo> prestamos = new ArrayList<>(); // Lista para almacenar los préstamos
         String sql = "SELECT p.* FROM prestamos p " +
                      "INNER JOIN libros l ON p.libro_id = l.id " +
-                     "WHERE l.titulo = ?";
+                     "WHERE l.titulo = ?"; // Consulta para obtener préstamos por título de libro
         
         try (Connection conn = DatabaseConfig.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql))
+             PreparedStatement consultaPrestamo = conn.prepareStatement(sql))
              {
 
-            pstmt.setString(1, libro.getTitulo());
-            ResultSet rs = pstmt.executeQuery();
+            consultaPrestamo.setString(1, libro.getTitulo());
+            ResultSet respuesta = consultaPrestamo.executeQuery(); // Ejecutar la consulta
 
-            while (rs.next())
+            while (respuesta.next())
             {
                 // Crear Calendar para fecha de retiro
                 Calendar fechaRetiro = Calendar.getInstance();
-                java.sql.Date sqlFechaRetiro = rs.getDate("fecha_retiro");
+                java.sql.Date sqlFechaRetiro = respuesta.getDate("fecha_retiro");
                 fechaRetiro.setTime(sqlFechaRetiro);
 
                 // Buscar el socio
-                int socioDni = rs.getInt("socio_dni");
+                int socioDni = respuesta.getInt("socio_dni");
                 Socio socio = biblioteca.buscarSocio(socioDni);
 
                 if (socio != null)
@@ -432,7 +446,7 @@ public class BibliotecaDAO {
                     Prestamo prestamo = new Prestamo(fechaRetiro, socio, libro);
 
                     // Si hay fecha de devolución, registrarla
-                    java.sql.Date sqlFechaDevolucion = rs.getDate("fecha_devolucion");
+                    java.sql.Date sqlFechaDevolucion = respuesta.getDate("fecha_devolucion");
                     if (sqlFechaDevolucion != null)
                     {
                         Calendar fechaDevolucion = Calendar.getInstance();
@@ -464,19 +478,18 @@ public class BibliotecaDAO {
         String sql = "UPDATE prestamos SET fecha_devolucion = ? " +
                      "WHERE libro_id = (SELECT id FROM libros WHERE titulo = ?) " +
                      "AND fecha_devolucion IS NULL " +
-                     "ORDER BY fecha_retiro DESC LIMIT 1";
+                     "ORDER BY fecha_retiro DESC LIMIT 1"; // Consulta para actualizar la fecha de devolución del préstamo más reciente
         
         try (Connection conn = DatabaseConfig.getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(sql))
+                PreparedStatement consulta = conn.prepareStatement(sql))
             {
-            
+
             java.sql.Date sqlFechaDevolucion = new java.sql.Date(fechaDevolucion.getTimeInMillis());
-            pstmt.setDate(1, sqlFechaDevolucion);
-            pstmt.setString(2, libroTitulo);
-            
-            int filasAfectadas = pstmt.executeUpdate();
+            consulta.setDate(1, sqlFechaDevolucion);
+            consulta.setString(2, libroTitulo);
+
+            int filasAfectadas = consulta.executeUpdate(); // Ejecutar la consulta
             return filasAfectadas > 0;
-            
         }
         catch (SQLException e)
         {

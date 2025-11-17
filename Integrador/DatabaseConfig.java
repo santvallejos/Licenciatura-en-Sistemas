@@ -31,63 +31,60 @@ public class DatabaseConfig {
     // 4. O usa: postgresql-42.7.1.jar (u otra versión)
     // ============================================
     
-    private static Connection connection = null;
+    private static boolean tablasCreadas = false;
     
     /**
      * Obtiene una conexión a la base de datos PostgreSQL.
-     * Si no existe, la crea.
+     * Crea una NUEVA conexión cada vez (pool pattern).
      * 
-     * @return Connection - Conexión activa a la base de datos
+     * @return Connection - Nueva conexión a la base de datos
      * @throws SQLException si hay error en la conexión
      */
     public static Connection getConnection() throws SQLException
     {
-        if (connection == null || connection.isClosed())
-        {
-            try {
-                // Cargar el driver de PostgreSQL
-                Class.forName("org.postgresql.Driver");
-                
-                // Establecer la conexión con SSL
-                String urlWithSSL = URL + "?sslmode=require";
-                connection = DriverManager.getConnection(urlWithSSL, USER, PASSWORD);
-                
-                System.out.println("✅ Conexión a PostgreSQL establecida");
-                System.out.println("📍 Servidor: " + HOST);
-                System.out.println("📊 Base de datos: " + DATABASE);
-                
-                // Crear las tablas si no existen
-                crearTablas();
-            } 
-            catch (ClassNotFoundException e) // No se encontró el driver
-            {
-                System.err.println("❌ ERROR: No se encontró el driver de PostgreSQL");
-                System.err.println("Descarga el conector desde: https://jdbc.postgresql.org/download/");
-                System.err.println("Necesitas: postgresql-42.7.1.jar (o versión superior)");
-                throw new SQLException("Driver de PostgreSQL no encontrado", e);
-            } 
-            catch (SQLException e) // No se pudo conectar a la DB
-            {
-                System.err.println("❌ ERROR: No se pudo conectar a PostgreSQL");
-                System.err.println("Verifica:");
-                System.err.println("  1. Que las credenciales sean correctas");
-                System.err.println("  2. Que tengas conexión a internet");
-                System.err.println("  3. Que el servicio Render esté activo");
-                System.err.println("  4. Que el driver PostgreSQL esté en el classpath");
-                throw e;
+        try {
+            // Cargar el driver de PostgreSQL
+            Class.forName("org.postgresql.Driver");
+            
+            // Establecer una NUEVA conexión con SSL
+            String urlWithSSL = URL + "?sslmode=require";
+            Connection conn = DriverManager.getConnection(urlWithSSL, USER, PASSWORD);
+            
+            // Crear las tablas solo la primera vez
+            if (!tablasCreadas) {
+                crearTablas(conn);
+                tablasCreadas = true;
             }
+            
+            return conn;
+        } 
+        catch (ClassNotFoundException e) // No se encontró el driver
+        {
+            System.err.println("❌ ERROR: No se encontró el driver de PostgreSQL");
+            System.err.println("Descarga el conector desde: https://jdbc.postgresql.org/download/");
+            System.err.println("Necesitas: postgresql-42.7.1.jar (o versión superior)");
+            throw new SQLException("Driver de PostgreSQL no encontrado", e);
+        } 
+        catch (SQLException e) // No se pudo conectar a la DB
+        {
+            System.err.println("❌ ERROR: No se pudo conectar a PostgreSQL");
+            System.err.println("Verifica:");
+            System.err.println("  1. Que las credenciales sean correctas");
+            System.err.println("  2. Que tengas conexión a internet");
+            System.err.println("  3. Que el servicio Render esté activo");
+            System.err.println("  4. Que el driver PostgreSQL esté en el classpath");
+            throw e;
         }
-        return connection;
     }
     
     /**
      * Crea las tablas necesarias en PostgreSQL si no existen.
      * PostgreSQL usa sintaxis ligeramente diferente a MySQL.
      */
-    private static void crearTablas() 
+    private static void crearTablas(Connection conn) 
     {
         try {
-            Statement stmt = connection.createStatement();
+            Statement stmt = conn.createStatement();
             
             // Tabla de Socios
             String sqlSocios = 
@@ -136,16 +133,16 @@ public class DatabaseConfig {
     }
     
     /**
-     * Cierra la conexión a la base de datos.
+     * Cierra una conexión específica a la base de datos.
+     * @param conn La conexión a cerrar
      */
-    public static void closeConnection()
+    public static void closeConnection(Connection conn)
     {
         try
         {
-            if (connection != null && !connection.isClosed())
+            if (conn != null && !conn.isClosed())
             {
-                connection.close();
-                System.out.println("✅ Conexión a la base de datos cerrada");
+                conn.close();
             }
         }
         catch (SQLException e)
@@ -155,15 +152,16 @@ public class DatabaseConfig {
     }
     
     /**
-     * Verifica si hay conexión a la base de datos.
+     * Verifica si una conexión está activa.
      * 
+     * @param conn La conexión a verificar
      * @return true si hay conexión activa, false en caso contrario
      */
-    public static boolean isConnected()
+    public static boolean isConnected(Connection conn)
     {
         try
         {
-            return connection != null && !connection.isClosed();
+            return conn != null && !conn.isClosed();
         }
         catch (SQLException e)
         {
