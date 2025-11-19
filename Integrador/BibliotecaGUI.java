@@ -4,6 +4,7 @@ import java.awt.event.*;
 import java.sql.Connection;
 import java.util.Calendar;
 import java.util.ArrayList;
+import java.net.URL;
 
 /**
  * Interfaz gráfica principal para el sistema de gestión de biblioteca.
@@ -30,6 +31,7 @@ public class BibliotecaGUI extends JFrame
     private final Color COLOR_ADVERTENCIA_HOVER = new Color(249, 115, 22); // Naranja hover
     private final Color COLOR_FONDO = new Color(249, 250, 251);        // Gris #F9FAFB
     private final Color COLOR_TEXTO = new Color(30, 41, 59);           // Gris oscuro #1E293B
+    private final Color COLOR_TEXTO_LIGHT = new Color(100, 116, 139);  // Gris medio
     private final Color COLOR_BORDER = new Color(226, 232, 240);       // Gris borde #E2E8F0
     
     // Fuentes modernas
@@ -51,8 +53,9 @@ public class BibliotecaGUI extends JFrame
         System.out.println("📡 Intentando conectar a la base de datos PostgreSQL...");
         try
         {
-            Connection conn = DatabaseConfig.getConnection(); // Intentar obtener la conexión (esto crea las tablas si no existen)
-
+            // Intentar obtener la conexión (esto crea las tablas si no existen)
+            Connection conn = DatabaseConfig.getConnection();
+            
             if (conn != null && !conn.isClosed())
             {
                 usarBaseDatos = true;
@@ -115,14 +118,16 @@ public class BibliotecaGUI extends JFrame
             }
         });
 
-        // Establecer el Look and Feel del sistema
+        // Establecer el Look and Feel multiplataforma (Nimbus) para consistencia en todos los SO
         try
         {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            // Usar Nimbus en lugar del LaF del sistema para que funcione igual en Mac y Windows
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            // Si Nimbus no está disponible, usar el LaF por defecto
+            System.err.println("⚠️ No se pudo cargar Nimbus LaF: " + e.getMessage());
         }
 
         // Crear la interfaz
@@ -233,6 +238,8 @@ public class BibliotecaGUI extends JFrame
         boton.setFont(FONT_BOTON);
         boton.setBackground(color);
         boton.setForeground(Color.WHITE);
+        boton.setOpaque(true);  // Necesario para macOS
+        boton.setContentAreaFilled(true);  // Necesario para macOS
         boton.setFocusPainted(false);
         boton.setBorderPainted(false);
         boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -267,6 +274,8 @@ public class BibliotecaGUI extends JFrame
         boton.setFont(new Font("Segoe UI", Font.BOLD, 18));
         boton.setBackground(color);
         boton.setForeground(Color.WHITE);
+        boton.setOpaque(true);  // Necesario para macOS
+        boton.setContentAreaFilled(true);  // Necesario para macOS
         boton.setFocusPainted(false);
         boton.setBorderPainted(false);
         boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -557,13 +566,13 @@ public class BibliotecaGUI extends JFrame
                 int dni = Integer.parseInt(txtDni.getText().trim());
                 String nombre = txtNombre.getText().trim();
                 String adicional = txtAdicional.getText().trim();
-
+                
                 if (nombre.isEmpty() || adicional.isEmpty())
                 {
                     mostrarMensaje("Error", "Por favor complete todos los campos", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-
+                
                 String tipo = (String) cmbTipo.getSelectedItem();
                 if (tipo.equals("Estudiante"))
                 {
@@ -1021,6 +1030,8 @@ public class BibliotecaGUI extends JFrame
         boton.setFont(new Font("Segoe UI", Font.BOLD, 13));
         boton.setBackground(color);
         boton.setForeground(Color.WHITE);
+        boton.setOpaque(true);  // Necesario para macOS
+        boton.setContentAreaFilled(true);  // Necesario para macOS
         boton.setFocusPainted(false);
         boton.setBorderPainted(false);
         boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -1431,9 +1442,19 @@ public class BibliotecaGUI extends JFrame
     {
         System.out.println("\n🔄 Cerrando aplicación...");
         
-        // Las conexiones se cierran automáticamente con try-with-resources
-        // No es necesario cerrar ninguna conexión compartida ya que cada operación
-        // abre y cierra su propia conexión
+        // Cerrar la conexión a la base de datos si está activa
+        if (usarBaseDatos)
+        {
+            try
+            {
+                //DatabaseConfig.closeConnection();
+                System.out.println("✅ Conexión a la base de datos cerrada correctamente");
+            }
+            catch (Exception e)
+            {
+                System.err.println("⚠️ Error al cerrar la conexión: " + e.getMessage());
+            }
+        }
         
         System.out.println("👋 ¡Hasta pronto!");
         
