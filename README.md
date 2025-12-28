@@ -21,17 +21,3 @@ La organización propuesta en la raíz del repositorio es la siguiente:
 - `POO/` : Material, prácticas y trabajos de Programación Orientada a
  Objetos (Java).
 - `README.md` : Este archivo — guía y estructura del proyecto.
-
-Dentro de cada carpeta de materia (ej. `POO/Practico3/`), la estructura
-recomendada es:
-
-- `modelos-parciales/` : Archivá los modelos de parciales (PDF, .lisp, .java, etc.).
-- `finales/` : Modelos o resoluciones de finales.
-- `trabajos/` : Trabajos prácticos entregados o en desarrollo.
-- `ejercicios/` : Ejercicios sueltos o de prácticas.
-- `recursos/` : Apuntes, slides, enlaces y otros recursos.
-- `README.md` (opcional) : Explica el contenido específico de la materia.
-
-Ejemplo de nombre de carpeta por materia:
-
-- `2025_Matematica_Discreta/` o `Matematica_Discreta/` (elige un estilo y mantenlo).
