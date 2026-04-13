@@ -1,0 +1,217 @@
+{
+  "main": {
+    "id": "21583e96d5d02c0b",
+    "type": "split",
+    "children": [
+      {
+        "id": "137a1bbc3094d79f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0d7321952afe651e",
+            "type": "leaf",
+            "state": {
+              "type": "pdf",
+              "state": {
+                "file": "Taller de programación I/Primera entrega/Taller de Programación I - Primer proyecto 2026.pdf"
+              },
+              "icon": "lucide-file-text",
+              "title": "Taller de Programación I - Primer proyecto 2026"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "b708b317cada9d1e",
+    "type": "split",
+    "children": [
+      {
+        "id": "2ee7e725887e6f22",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ce187f11b0c813b3",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Explorador de archivos"
+            }
+          },
+          {
+            "id": "1aec5ab8205659fe",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Buscar"
+            }
+          },
+          {
+            "id": "ae2766c3ce37a5a9",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Marcadores"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 276.50909423828125
+  },
+  "right": {
+    "id": "f8959fa0924ede7c",
+    "type": "split",
+    "children": [
+      {
+        "id": "65b3f34ac904ca17",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "584c719582bed7f2",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Enlaces entrantes"
+            }
+          },
+          {
+            "id": "3f1c75f6fe603023",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Enlaces salientes"
+            }
+          },
+          {
+            "id": "72ae4edfe1714053",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Etiquetas"
+            }
+          },
+          {
+            "id": "5e01f7f94a16b7a7",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "Todas las propiedades"
+            }
+          },
+          {
+            "id": "2f6456400760540c",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Star/Features/Roles/desarrollo.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Esquema de desarrollo"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Abrir selector rápido": false,
+      "graph:Abrir vista gráfica": false,
+      "canvas:Crear nuevo lienzo": false,
+      "daily-notes:Abrir la nota de hoy": false,
+      "templates:Insertar plantilla": false,
+      "command-palette:Abrir paleta de comandos": false,
+      "bases:Crear nueva base": false,
+      "obsidian-excalidraw-plugin:New drawing": false
+    }
+  },
+  "active": "0d7321952afe651e",
+  "lastOpenFiles": [
+    "Taller de programación I/Trabajo practivo 2/Guía de Actividades Nº 2.pdf",
+    "Taller de programación I/Trabajo practivo 2/dasdasd",
+    "Taller de programación I/Trabajo practico 1/Guía de Actividades Nº 1.pdf",
+    "Taller de programación I/Trabajo practico 1/README.md",
+    "README.md",
+    "Taller de programación I/Trabajo practivo 2",
+    "CNRN/Excalidraw/Acciones y estado de DDJJ - [CNRN].excalidraw",
+    "CNRN/Excalidraw/formulario_ddjj.excalidraw.md",
+    "Pasted Image 20260408095026_592.png",
+    "Pasted Image 20260408094216_548.png",
+    "Pasted Image 20260408094109_627.png",
+    "Pasted Image 20260408093951_503.png",
+    "Pasted Image 20260408093217_198_0.png",
+    "Pasted Image 20260408093119_521_0.png",
+    "Pasted Image 20260408093004_249_0.png",
+    "CNRN/Excalidraw/fomulario_ddjj.excalidraw",
+    "Pasted Image 20260408092853_342.png",
+    "CNRN/Excalidraw/fomulario_ddjj.md",
+    "Pasted Image 20260408093217_198.png",
+    "Pasted Image 20260408093119_521.png",
+    "CNRN/Features/nuevas_acciones_y_estados_tramite_ddjj.md",
+    "Sin título.md",
+    "CNRN/Features",
+    "Sin nombre",
+    "CNRN/Analisis/backend.md",
+    "CNRN/Agents/agent-backend.md",
+    "Star/Features/Roles/nuevo_rol_administrativo.md",
+    "Star/Features/Roles/desarrollo.md",
+    "Star/Features/Roles/Nuevo",
+    "Star/Features/Roles",
+    "Sin título.base"
+  ]
+}
