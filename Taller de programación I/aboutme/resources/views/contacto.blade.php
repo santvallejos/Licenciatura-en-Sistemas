@@ -2,10 +2,8 @@
 <html>
 
 <head>
-    <title>Sobre mí</title>
-
+    <title>Contacto</title>
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
-
 </head>
 
 <body>
@@ -15,50 +13,30 @@
             <a class="navbar-brand" href="#">Mi Sitio</a>
             <div class="navbar-nav">
                 <a class="nav-link" href="/">Inicio</a>
-                <a class="nav-link active" href="/sobre-mi">Sobre mí</a>
+                <a class="nav-link" href="/aboutme">Sobre mí</a>
+                <a class="nav-link active" href="/contacto">Contacto</a>
             </div>
         </div>
     </nav>
 
     <div class="container mt-4">
-
         <div class="card">
             <div class="card-body">
-                <h1 class="card-title">Sobre mí</h1>
+                <h1 class="card-title">Contacto</h1>
 
-                <p><b>Nombre:</b> Juan Pérez</p>
-
-                <p><b>Edad:</b> 23 años</p>
-
-                <p><b>De dónde soy:</b> Corrientes, Argentina</p>
-
-                <p><b>Me gustaría trabajar en:</b> Desarrollo de software</p>
-
-                <p><b>Expectativas del curso:</b> Aprender a crear aplicaciones web</p>
-
-                <p><b>Hobbies:</b> Programar y videojuegos</p>
-
-                <a href="#" class="btn btn-primary mt-3">Descargar CV</a>
-                <a href="#" class="btn btn-secondary mt-3">Contactar</a>
-            </div>
-        </div>
-
-        <div class="card mt-4">
-            <div class="card-body">
-                <h2>Formulario de contacto</h2>
-
-                <form>
+                <form action="{{ url('/contacto') }}" method="POST">
+                    @csrf
                     <div class="mb-3">
                         <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" placeholder="Ingrese su nombre">
+                        <input type="text" name="nombre" class="form-control" placeholder="Ingrese su nombre">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-control" placeholder="Ingrese su email">
+                        <input type="email" name="email" class="form-control" placeholder="Ingrese su email">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Mensaje</label>
-                        <textarea class="form-control" rows="3"></textarea>
+                        <textarea name="mensaje" class="form-control" rows="3"></textarea>
                     </div>
                     <button type="submit" class="btn btn-success">
                         Enviar mensaje
@@ -66,7 +44,6 @@
                 </form>
             </div>
         </div>
-
     </div>
 
     <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
